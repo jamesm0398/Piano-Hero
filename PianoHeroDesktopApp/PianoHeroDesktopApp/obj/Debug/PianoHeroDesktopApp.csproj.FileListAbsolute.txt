@@ -1,0 +1,14 @@
+C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\bin\Debug\PianoHeroDesktopApp.exe.config
+C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\bin\Debug\PianoHeroDesktopApp.exe
+C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\bin\Debug\PianoHeroDesktopApp.pdb
+C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\bin\Debug\MetroFramework.Design.dll
+C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\bin\Debug\MetroFramework.dll
+C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\bin\Debug\MetroFramework.Fonts.dll
+C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.csprojAssemblyReference.cache
+C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.Properties.Resources.resources
+C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.csproj.GenerateResource.cache
+C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.csproj.CoreCompileInputs.cache
+C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.csproj.CopyComplete
+C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.exe
+C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.pdb
+C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.PianoHero.resources
