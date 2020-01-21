@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\Users\JohnCPLaptop\source\repos\jhall_SOA-Assign3\jhall_SOA-Assign3\bin\Release\Publish</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/jhall_SOA-Assign3.dll">
+      <publishTime>10/15/2019 21:38:08</publishTime>
+    </File>
+    <File Include="bin/jhall_SOA-Assign3.pdb">
+      <publishTime>10/15/2019 21:38:08</publishTime>
+    </File>
+    <File Include="Case.asmx">
+      <publishTime>10/10/2019 14:32:43</publishTime>
+    </File>
+    <File Include="Connected Services/IpGoeLookUp/jhall_SOA_Assign3.IpGoeLookUp.IPInformation.datasource">
+      <publishTime>10/10/2019 14:37:56</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>10/11/2019 10:40:51</publishTime>
+    </File>
+    <File Include="Loan.asmx">
+      <publishTime>10/10/2019 13:57:05</publishTime>
+    </File>
+    <File Include="LogService.asmx">
+      <publishTime>10/10/2019 15:37:17</publishTime>
+    </File>
+    <File Include="Resolve.asmx">
+      <publishTime>10/10/2019 14:33:32</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>10/15/2019 21:38:08</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

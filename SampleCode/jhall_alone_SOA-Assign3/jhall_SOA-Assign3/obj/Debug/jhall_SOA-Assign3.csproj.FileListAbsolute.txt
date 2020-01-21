@@ -1,0 +1,6 @@
+C:\Users\JohnCPLaptop\source\repos\jhall_alone_SOA-Assign3\jhall_SOA-Assign3\bin\jhall_SOA-Assign3.dll.config
+C:\Users\JohnCPLaptop\source\repos\jhall_alone_SOA-Assign3\jhall_SOA-Assign3\bin\jhall_SOA-Assign3.dll
+C:\Users\JohnCPLaptop\source\repos\jhall_alone_SOA-Assign3\jhall_SOA-Assign3\bin\jhall_SOA-Assign3.pdb
+C:\Users\JohnCPLaptop\source\repos\jhall_alone_SOA-Assign3\jhall_SOA-Assign3\obj\Debug\jhall_SOA-Assign3.csproj.CoreCompileInputs.cache
+C:\Users\JohnCPLaptop\source\repos\jhall_alone_SOA-Assign3\jhall_SOA-Assign3\obj\Debug\jhall_SOA-Assign3.dll
+C:\Users\JohnCPLaptop\source\repos\jhall_alone_SOA-Assign3\jhall_SOA-Assign3\obj\Debug\jhall_SOA-Assign3.pdb

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jhall_SOA-Assign3", "jhall_SOA-Assign3\jhall_SOA-Assign3.csproj", "{CBCD7B43-5865-4E48-9F49-FAA600E36B4C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBCD7B43-5865-4E48-9F49-FAA600E36B4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBCD7B43-5865-4E48-9F49-FAA600E36B4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBCD7B43-5865-4E48-9F49-FAA600E36B4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBCD7B43-5865-4E48-9F49-FAA600E36B4C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D1F8BD05-2161-40FA-9BDE-E1AFC5EA3E83}
+	EndGlobalSection
+EndGlobal
