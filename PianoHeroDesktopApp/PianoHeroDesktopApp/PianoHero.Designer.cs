@@ -58,6 +58,7 @@
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.BrowseSave = new MetroFramework.Controls.MetroButton();
             this.metroTabControl1.SuspendLayout();
             this.KeyboardTab.SuspendLayout();
             this.midiCreationTab.SuspendLayout();
@@ -74,7 +75,7 @@
             this.metroTabControl1.Location = new System.Drawing.Point(20, 60);
             this.metroTabControl1.Margin = new System.Windows.Forms.Padding(5);
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 1;
+            this.metroTabControl1.SelectedIndex = 2;
             this.metroTabControl1.Size = new System.Drawing.Size(767, 373);
             this.metroTabControl1.TabIndex = 0;
             this.metroTabControl1.UseSelectable = true;
@@ -319,6 +320,7 @@
             // 
             // SettingsTab
             // 
+            this.SettingsTab.Controls.Add(this.BrowseSave);
             this.SettingsTab.Controls.Add(this.metroTextBox7);
             this.SettingsTab.Controls.Add(this.metroLabel7);
             this.SettingsTab.Controls.Add(this.metroTextBox6);
@@ -555,6 +557,16 @@
             this.metroLabel1.TabIndex = 2;
             this.metroLabel1.Text = "Default MIDI save location:";
             // 
+            // BrowseSave
+            // 
+            this.BrowseSave.Location = new System.Drawing.Point(435, 29);
+            this.BrowseSave.Name = "BrowseSave";
+            this.BrowseSave.Size = new System.Drawing.Size(75, 23);
+            this.BrowseSave.TabIndex = 15;
+            this.BrowseSave.Text = "Browse";
+            this.BrowseSave.UseSelectable = true;
+            this.BrowseSave.Click += new System.EventHandler(this.BrowseSave_Click);
+            // 
             // PianoHero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -605,6 +617,7 @@
         private MetroFramework.Controls.MetroLabel metroLabel8;
         private MetroFramework.Controls.MetroTextBox selectedFileText;
         private MetroFramework.Controls.MetroLabel respMessage;
+        private MetroFramework.Controls.MetroButton BrowseSave;
     }
 }
 

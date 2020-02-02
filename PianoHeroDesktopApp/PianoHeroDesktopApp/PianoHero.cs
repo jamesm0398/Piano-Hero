@@ -28,6 +28,7 @@ namespace PianoHeroDesktopApp
         string defaultPlaySpeedStr = ConfigurationManager.AppSettings["Speed"];
         string wavFile = "";
 
+
         public PianoHero()
         {
             InitializeComponent();
@@ -90,6 +91,26 @@ namespace PianoHeroDesktopApp
             {
                 wavFile = fdlg.FileName;
                 selectedFileText.Text = wavFile;
+            }
+
+        }
+
+        private void BrowseSave_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbdlg = new FolderBrowserDialog();
+            DialogResult result = fbdlg.ShowDialog();
+            Configuration config =
+            ConfigurationManager.OpenExeConfiguration
+            (ConfigurationUserLevel.None);
+
+        
+            if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbdlg.SelectedPath))
+            {
+                defaultSaveString = fbdlg.SelectedPath;
+                defaultSave.Text = defaultSaveString;
+                config.AppSettings.Settings.Remove("SaveLoc");
+                config.AppSettings.Settings.Add("SaveLoc", defaultSaveString);
+                config.Save(ConfigurationSaveMode.Modified);
             }
 
         }
