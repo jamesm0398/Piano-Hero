@@ -36,11 +36,14 @@
             this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
             this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
             this.midiCreationTab = new MetroFramework.Controls.MetroTabPage();
+            this.respMessage = new MetroFramework.Controls.MetroLabel();
+            this.selectedFileText = new MetroFramework.Controls.MetroTextBox();
+            this.metroLabel10 = new MetroFramework.Controls.MetroLabel();
+            this.selectedFile = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel9 = new MetroFramework.Controls.MetroLabel();
+            this.browseButton = new MetroFramework.Controls.MetroButton();
+            this.metroLabel8 = new MetroFramework.Controls.MetroLabel();
             this.convertButton = new MetroFramework.Controls.MetroButton();
-            this.metroListView2 = new MetroFramework.Controls.MetroListView();
-            this.metroTextBox4 = new MetroFramework.Controls.MetroTextBox();
-            this.metroComboBox2 = new MetroFramework.Controls.MetroComboBox();
-            this.metroTextBox3 = new MetroFramework.Controls.MetroTextBox();
             this.SettingsTab = new MetroFramework.Controls.MetroTabPage();
             this.metroTextBox7 = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel7 = new MetroFramework.Controls.MetroLabel();
@@ -55,6 +58,7 @@
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.BrowseSave = new MetroFramework.Controls.MetroButton();
             this.metroTabControl1.SuspendLayout();
             this.KeyboardTab.SuspendLayout();
             this.midiCreationTab.SuspendLayout();
@@ -71,8 +75,8 @@
             this.metroTabControl1.Location = new System.Drawing.Point(20, 60);
             this.metroTabControl1.Margin = new System.Windows.Forms.Padding(5);
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 0;
-            this.metroTabControl1.Size = new System.Drawing.Size(760, 370);
+            this.metroTabControl1.SelectedIndex = 2;
+            this.metroTabControl1.Size = new System.Drawing.Size(767, 373);
             this.metroTabControl1.TabIndex = 0;
             this.metroTabControl1.UseSelectable = true;
             // 
@@ -89,7 +93,7 @@
             this.KeyboardTab.Location = new System.Drawing.Point(4, 38);
             this.KeyboardTab.Name = "KeyboardTab";
             this.KeyboardTab.Padding = new System.Windows.Forms.Padding(200);
-            this.KeyboardTab.Size = new System.Drawing.Size(752, 328);
+            this.KeyboardTab.Size = new System.Drawing.Size(759, 331);
             this.KeyboardTab.TabIndex = 0;
             this.KeyboardTab.Text = "Keyboard";
             this.KeyboardTab.VerticalScrollbarBarColor = true;
@@ -198,127 +202,125 @@
             // 
             // midiCreationTab
             // 
+            this.midiCreationTab.Controls.Add(this.respMessage);
+            this.midiCreationTab.Controls.Add(this.selectedFileText);
+            this.midiCreationTab.Controls.Add(this.metroLabel10);
+            this.midiCreationTab.Controls.Add(this.selectedFile);
+            this.midiCreationTab.Controls.Add(this.metroLabel9);
+            this.midiCreationTab.Controls.Add(this.browseButton);
+            this.midiCreationTab.Controls.Add(this.metroLabel8);
             this.midiCreationTab.Controls.Add(this.convertButton);
-            this.midiCreationTab.Controls.Add(this.metroListView2);
-            this.midiCreationTab.Controls.Add(this.metroTextBox4);
-            this.midiCreationTab.Controls.Add(this.metroComboBox2);
-            this.midiCreationTab.Controls.Add(this.metroTextBox3);
             this.midiCreationTab.HorizontalScrollbarBarColor = true;
             this.midiCreationTab.HorizontalScrollbarHighlightOnWheel = false;
             this.midiCreationTab.HorizontalScrollbarSize = 10;
             this.midiCreationTab.Location = new System.Drawing.Point(4, 38);
             this.midiCreationTab.Name = "midiCreationTab";
-            this.midiCreationTab.Size = new System.Drawing.Size(752, 328);
+            this.midiCreationTab.Size = new System.Drawing.Size(759, 331);
             this.midiCreationTab.TabIndex = 1;
             this.midiCreationTab.Text = "MIDI Creation";
             this.midiCreationTab.VerticalScrollbarBarColor = true;
             this.midiCreationTab.VerticalScrollbarHighlightOnWheel = false;
             this.midiCreationTab.VerticalScrollbarSize = 10;
             // 
+            // respMessage
+            // 
+            this.respMessage.AutoSize = true;
+            this.respMessage.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.respMessage.ForeColor = System.Drawing.Color.Green;
+            this.respMessage.Location = new System.Drawing.Point(42, 303);
+            this.respMessage.Name = "respMessage";
+            this.respMessage.Size = new System.Drawing.Size(86, 19);
+            this.respMessage.TabIndex = 14;
+            this.respMessage.Text = "metroLabel11";
+            // 
+            // selectedFileText
+            // 
+            // 
+            // 
+            // 
+            this.selectedFileText.CustomButton.Image = null;
+            this.selectedFileText.CustomButton.Location = new System.Drawing.Point(442, 1);
+            this.selectedFileText.CustomButton.Name = "";
+            this.selectedFileText.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.selectedFileText.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.selectedFileText.CustomButton.TabIndex = 1;
+            this.selectedFileText.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.selectedFileText.CustomButton.UseSelectable = true;
+            this.selectedFileText.CustomButton.Visible = false;
+            this.selectedFileText.Lines = new string[0];
+            this.selectedFileText.Location = new System.Drawing.Point(42, 149);
+            this.selectedFileText.MaxLength = 32767;
+            this.selectedFileText.Name = "selectedFileText";
+            this.selectedFileText.PasswordChar = '\0';
+            this.selectedFileText.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.selectedFileText.SelectedText = "";
+            this.selectedFileText.SelectionLength = 0;
+            this.selectedFileText.SelectionStart = 0;
+            this.selectedFileText.ShortcutsEnabled = true;
+            this.selectedFileText.Size = new System.Drawing.Size(464, 23);
+            this.selectedFileText.TabIndex = 13;
+            this.selectedFileText.UseSelectable = true;
+            this.selectedFileText.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.selectedFileText.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // metroLabel10
+            // 
+            this.metroLabel10.AutoSize = true;
+            this.metroLabel10.Location = new System.Drawing.Point(42, 201);
+            this.metroLabel10.Name = "metroLabel10";
+            this.metroLabel10.Size = new System.Drawing.Size(19, 19);
+            this.metroLabel10.TabIndex = 12;
+            this.metroLabel10.Text = "3.";
+            // 
+            // selectedFile
+            // 
+            this.selectedFile.AutoSize = true;
+            this.selectedFile.Location = new System.Drawing.Point(42, 149);
+            this.selectedFile.Name = "selectedFile";
+            this.selectedFile.Size = new System.Drawing.Size(0, 0);
+            this.selectedFile.TabIndex = 11;
+            // 
+            // metroLabel9
+            // 
+            this.metroLabel9.AutoSize = true;
+            this.metroLabel9.Location = new System.Drawing.Point(42, 110);
+            this.metroLabel9.Name = "metroLabel9";
+            this.metroLabel9.Size = new System.Drawing.Size(125, 19);
+            this.metroLabel9.TabIndex = 10;
+            this.metroLabel9.Text = "2. Your selected file:";
+            // 
+            // browseButton
+            // 
+            this.browseButton.Location = new System.Drawing.Point(42, 70);
+            this.browseButton.Name = "browseButton";
+            this.browseButton.Size = new System.Drawing.Size(75, 23);
+            this.browseButton.TabIndex = 9;
+            this.browseButton.Text = "Browse";
+            this.browseButton.UseSelectable = true;
+            this.browseButton.Click += new System.EventHandler(this.browseButton_Click);
+            // 
+            // metroLabel8
+            // 
+            this.metroLabel8.AutoSize = true;
+            this.metroLabel8.Location = new System.Drawing.Point(42, 34);
+            this.metroLabel8.Name = "metroLabel8";
+            this.metroLabel8.Size = new System.Drawing.Size(108, 19);
+            this.metroLabel8.TabIndex = 8;
+            this.metroLabel8.Text = "1. Select WAV file";
+            // 
             // convertButton
             // 
-            this.convertButton.Location = new System.Drawing.Point(498, 193);
+            this.convertButton.Location = new System.Drawing.Point(42, 226);
             this.convertButton.Name = "convertButton";
-            this.convertButton.Size = new System.Drawing.Size(130, 70);
+            this.convertButton.Size = new System.Drawing.Size(108, 61);
             this.convertButton.TabIndex = 7;
             this.convertButton.Text = "Convert to MIDI";
             this.convertButton.UseSelectable = true;
             this.convertButton.Click += new System.EventHandler(this.convertButton_Click);
             // 
-            // metroListView2
-            // 
-            this.metroListView2.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.metroListView2.FullRowSelect = true;
-            this.metroListView2.Location = new System.Drawing.Point(276, 52);
-            this.metroListView2.Name = "metroListView2";
-            this.metroListView2.OwnerDraw = true;
-            this.metroListView2.Size = new System.Drawing.Size(219, 105);
-            this.metroListView2.TabIndex = 6;
-            this.metroListView2.UseCompatibleStateImageBehavior = false;
-            this.metroListView2.UseSelectable = true;
-            // 
-            // metroTextBox4
-            // 
-            // 
-            // 
-            // 
-            this.metroTextBox4.CustomButton.Image = null;
-            this.metroTextBox4.CustomButton.Location = new System.Drawing.Point(197, 1);
-            this.metroTextBox4.CustomButton.Name = "";
-            this.metroTextBox4.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.metroTextBox4.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox4.CustomButton.TabIndex = 1;
-            this.metroTextBox4.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox4.CustomButton.UseSelectable = true;
-            this.metroTextBox4.CustomButton.Visible = false;
-            this.metroTextBox4.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.metroTextBox4.Lines = new string[] {
-        "Select a wav file to convert:"};
-            this.metroTextBox4.Location = new System.Drawing.Point(276, 22);
-            this.metroTextBox4.MaxLength = 32767;
-            this.metroTextBox4.Name = "metroTextBox4";
-            this.metroTextBox4.PasswordChar = '\0';
-            this.metroTextBox4.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox4.SelectedText = "";
-            this.metroTextBox4.SelectionLength = 0;
-            this.metroTextBox4.SelectionStart = 0;
-            this.metroTextBox4.ShortcutsEnabled = true;
-            this.metroTextBox4.Size = new System.Drawing.Size(219, 23);
-            this.metroTextBox4.TabIndex = 5;
-            this.metroTextBox4.Text = "Select a wav file to convert:";
-            this.metroTextBox4.UseSelectable = true;
-            this.metroTextBox4.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.metroTextBox4.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // metroComboBox2
-            // 
-            this.metroComboBox2.FormattingEnabled = true;
-            this.metroComboBox2.ItemHeight = 23;
-            this.metroComboBox2.Items.AddRange(new object[] {
-            "Music",
-            "Documents",
-            "Desktop"});
-            this.metroComboBox2.Location = new System.Drawing.Point(4, 52);
-            this.metroComboBox2.Name = "metroComboBox2";
-            this.metroComboBox2.Size = new System.Drawing.Size(141, 29);
-            this.metroComboBox2.TabIndex = 4;
-            this.metroComboBox2.UseSelectable = true;
-            // 
-            // metroTextBox3
-            // 
-            // 
-            // 
-            // 
-            this.metroTextBox3.CustomButton.Image = null;
-            this.metroTextBox3.CustomButton.Location = new System.Drawing.Point(120, 1);
-            this.metroTextBox3.CustomButton.Name = "";
-            this.metroTextBox3.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.metroTextBox3.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox3.CustomButton.TabIndex = 1;
-            this.metroTextBox3.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox3.CustomButton.UseSelectable = true;
-            this.metroTextBox3.CustomButton.Visible = false;
-            this.metroTextBox3.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.metroTextBox3.Lines = new string[] {
-        "Select file location:"};
-            this.metroTextBox3.Location = new System.Drawing.Point(3, 22);
-            this.metroTextBox3.MaxLength = 32767;
-            this.metroTextBox3.Name = "metroTextBox3";
-            this.metroTextBox3.PasswordChar = '\0';
-            this.metroTextBox3.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox3.SelectedText = "";
-            this.metroTextBox3.SelectionLength = 0;
-            this.metroTextBox3.SelectionStart = 0;
-            this.metroTextBox3.ShortcutsEnabled = true;
-            this.metroTextBox3.Size = new System.Drawing.Size(142, 23);
-            this.metroTextBox3.TabIndex = 3;
-            this.metroTextBox3.Text = "Select file location:";
-            this.metroTextBox3.UseSelectable = true;
-            this.metroTextBox3.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.metroTextBox3.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
             // SettingsTab
             // 
+            this.SettingsTab.Controls.Add(this.BrowseSave);
             this.SettingsTab.Controls.Add(this.metroTextBox7);
             this.SettingsTab.Controls.Add(this.metroLabel7);
             this.SettingsTab.Controls.Add(this.metroTextBox6);
@@ -337,7 +339,7 @@
             this.SettingsTab.HorizontalScrollbarSize = 10;
             this.SettingsTab.Location = new System.Drawing.Point(4, 38);
             this.SettingsTab.Name = "SettingsTab";
-            this.SettingsTab.Size = new System.Drawing.Size(752, 328);
+            this.SettingsTab.Size = new System.Drawing.Size(759, 331);
             this.SettingsTab.TabIndex = 2;
             this.SettingsTab.Text = "Settings";
             this.SettingsTab.VerticalScrollbarBarColor = true;
@@ -555,17 +557,28 @@
             this.metroLabel1.TabIndex = 2;
             this.metroLabel1.Text = "Default MIDI save location:";
             // 
+            // BrowseSave
+            // 
+            this.BrowseSave.Location = new System.Drawing.Point(435, 29);
+            this.BrowseSave.Name = "BrowseSave";
+            this.BrowseSave.Size = new System.Drawing.Size(75, 23);
+            this.BrowseSave.TabIndex = 15;
+            this.BrowseSave.Text = "Browse";
+            this.BrowseSave.UseSelectable = true;
+            this.BrowseSave.Click += new System.EventHandler(this.BrowseSave_Click);
+            // 
             // PianoHero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(807, 453);
             this.Controls.Add(this.metroTabControl1);
             this.Name = "PianoHero";
             this.Text = "Piano Hero";
             this.metroTabControl1.ResumeLayout(false);
             this.KeyboardTab.ResumeLayout(false);
             this.midiCreationTab.ResumeLayout(false);
+            this.midiCreationTab.PerformLayout();
             this.SettingsTab.ResumeLayout(false);
             this.SettingsTab.PerformLayout();
             this.ResumeLayout(false);
@@ -584,10 +597,6 @@
         private MetroFramework.Controls.MetroTextBox metroTextBox1;
         private MetroFramework.Controls.MetroButton playButton;
         private MetroFramework.Controls.MetroButton convertButton;
-        private MetroFramework.Controls.MetroListView metroListView2;
-        private MetroFramework.Controls.MetroTextBox metroTextBox4;
-        private MetroFramework.Controls.MetroComboBox metroComboBox2;
-        private MetroFramework.Controls.MetroTextBox metroTextBox3;
         private MetroFramework.Controls.MetroTextBox metroTextBox6;
         private MetroFramework.Controls.MetroLabel metroLabel6;
         private MetroFramework.Controls.MetroTextBox metroTextBox5;
@@ -601,6 +610,14 @@
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private MetroFramework.Controls.MetroTextBox metroTextBox7;
         private MetroFramework.Controls.MetroLabel metroLabel7;
+        private MetroFramework.Controls.MetroLabel metroLabel10;
+        private MetroFramework.Controls.MetroLabel selectedFile;
+        private MetroFramework.Controls.MetroLabel metroLabel9;
+        private MetroFramework.Controls.MetroButton browseButton;
+        private MetroFramework.Controls.MetroLabel metroLabel8;
+        private MetroFramework.Controls.MetroTextBox selectedFileText;
+        private MetroFramework.Controls.MetroLabel respMessage;
+        private MetroFramework.Controls.MetroButton BrowseSave;
     }
 }
 

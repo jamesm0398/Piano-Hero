@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
 using System.Configuration;
+using System.Net;
+using System.IO;
 
 //Program: PianoHeroDesktopApp
 //Description: This tab control driven application enables the user to convert their own wav files to midi which will allow them to 
@@ -24,6 +26,8 @@ namespace PianoHeroDesktopApp
         string defaultSaveString = ConfigurationManager.AppSettings["SaveLoc"];
         string defaultVolumeStr = ConfigurationManager.AppSettings["Volume"];
         string defaultPlaySpeedStr = ConfigurationManager.AppSettings["Speed"];
+        string wavFile = "";
+
 
         public PianoHero()
         {
@@ -35,6 +39,7 @@ namespace PianoHeroDesktopApp
        
         }
 
+
         //ConvertButton_Click()
         //Summary: This method calls the cloud conversion service to upload the wav file and download the converted midi file
         //Params: sender, e
@@ -42,9 +47,25 @@ namespace PianoHeroDesktopApp
         private void convertButton_Click(object sender, EventArgs e)
         {
             //1. Retreive filename of wav file to upload
+
+            string shortnedFileName = Path.GetFileName(wavFile);
+
+            string uriString = @"http://mockwav2midi.herokuapp.com/wav2midi/";
+            WebClient cloudService = new WebClient();
+
             //2. Upload the wav file to the service
+            convertButton.Enabled = false;
+            byte[] response = cloudService.UploadFile(uriString, wavFile);
+
             //3. Download the converted file
             //4. Save that file to the default wav location
+            File.WriteAllBytes(defaultSaveString + shortnedFileName + ".midi", response);
+
+
+            convertButton.Enabled = true;
+
+            respMessage.Text = "Your converted file is successfully saved at " + defaultSaveString + shortnedFileName + ".midi";
+           
         }
 
         //PlayButton_Click()
@@ -56,6 +77,42 @@ namespace PianoHeroDesktopApp
             //1. Call microcontroller program
             //2. Send midi file using the filename selected to the microcontroller
             //3. Play the song on the LED strip using microcontroller program and have player buttons for user to control their song with
+        }
+
+        private void browseButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fdlg = new OpenFileDialog();
+            fdlg.Title = "Select WAV file";
+            fdlg.InitialDirectory = @"C:\";
+            fdlg.Filter = "WAV Files|*.wav";
+            fdlg.RestoreDirectory = true;
+
+            if (fdlg.ShowDialog()  == DialogResult.OK)
+            {
+                wavFile = fdlg.FileName;
+                selectedFileText.Text = wavFile;
+            }
+
+        }
+
+        private void BrowseSave_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbdlg = new FolderBrowserDialog();
+            DialogResult result = fbdlg.ShowDialog();
+            Configuration config =
+            ConfigurationManager.OpenExeConfiguration
+            (ConfigurationUserLevel.None);
+
+        
+            if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbdlg.SelectedPath))
+            {
+                defaultSaveString = fbdlg.SelectedPath;
+                defaultSave.Text = defaultSaveString;
+                config.AppSettings.Settings.Remove("SaveLoc");
+                config.AppSettings.Settings.Add("SaveLoc", defaultSaveString);
+                config.Save(ConfigurationSaveMode.Modified);
+            }
+
         }
     }
 }
