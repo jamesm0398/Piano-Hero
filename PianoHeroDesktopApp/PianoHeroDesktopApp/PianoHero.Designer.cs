@@ -28,13 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PianoHero));
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
             this.KeyboardTab = new MetroFramework.Controls.MetroTabPage();
+            this.fileSendStatus = new MetroFramework.Controls.MetroLabel();
+            this.fileSendProgress = new MetroFramework.Controls.MetroProgressBar();
+            this.metroLabel14 = new MetroFramework.Controls.MetroLabel();
+            this.selectedSong = new MetroFramework.Controls.MetroTextBox();
+            this.metroLabel13 = new MetroFramework.Controls.MetroLabel();
+            this.browseSongs = new MetroFramework.Controls.MetroButton();
+            this.metroLabel12 = new MetroFramework.Controls.MetroLabel();
+            this.pianoList = new MetroFramework.Controls.MetroComboBox();
+            this.metroLabel11 = new MetroFramework.Controls.MetroLabel();
             this.playButton = new MetroFramework.Controls.MetroButton();
-            this.metroListView1 = new MetroFramework.Controls.MetroListView();
-            this.metroTextBox2 = new MetroFramework.Controls.MetroTextBox();
-            this.metroComboBox1 = new MetroFramework.Controls.MetroComboBox();
-            this.metroTextBox1 = new MetroFramework.Controls.MetroTextBox();
             this.midiCreationTab = new MetroFramework.Controls.MetroTabPage();
             this.respMessage = new MetroFramework.Controls.MetroLabel();
             this.selectedFileText = new MetroFramework.Controls.MetroTextBox();
@@ -45,6 +51,7 @@
             this.metroLabel8 = new MetroFramework.Controls.MetroLabel();
             this.convertButton = new MetroFramework.Controls.MetroButton();
             this.SettingsTab = new MetroFramework.Controls.MetroTabPage();
+            this.BrowseSave = new MetroFramework.Controls.MetroButton();
             this.metroTextBox7 = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel7 = new MetroFramework.Controls.MetroLabel();
             this.metroTextBox6 = new MetroFramework.Controls.MetroTextBox();
@@ -58,7 +65,8 @@
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-            this.BrowseSave = new MetroFramework.Controls.MetroButton();
+            this.play = new MetroFramework.Controls.MetroButton();
+            this.metroLabel15 = new MetroFramework.Controls.MetroLabel();
             this.metroTabControl1.SuspendLayout();
             this.KeyboardTab.SuspendLayout();
             this.midiCreationTab.SuspendLayout();
@@ -75,18 +83,25 @@
             this.metroTabControl1.Location = new System.Drawing.Point(20, 60);
             this.metroTabControl1.Margin = new System.Windows.Forms.Padding(5);
             this.metroTabControl1.Name = "metroTabControl1";
-            this.metroTabControl1.SelectedIndex = 2;
+            this.metroTabControl1.SelectedIndex = 0;
             this.metroTabControl1.Size = new System.Drawing.Size(767, 373);
             this.metroTabControl1.TabIndex = 0;
             this.metroTabControl1.UseSelectable = true;
             // 
             // KeyboardTab
             // 
+            this.KeyboardTab.Controls.Add(this.metroLabel15);
+            this.KeyboardTab.Controls.Add(this.play);
+            this.KeyboardTab.Controls.Add(this.fileSendStatus);
+            this.KeyboardTab.Controls.Add(this.fileSendProgress);
+            this.KeyboardTab.Controls.Add(this.metroLabel14);
+            this.KeyboardTab.Controls.Add(this.selectedSong);
+            this.KeyboardTab.Controls.Add(this.metroLabel13);
+            this.KeyboardTab.Controls.Add(this.browseSongs);
+            this.KeyboardTab.Controls.Add(this.metroLabel12);
+            this.KeyboardTab.Controls.Add(this.pianoList);
+            this.KeyboardTab.Controls.Add(this.metroLabel11);
             this.KeyboardTab.Controls.Add(this.playButton);
-            this.KeyboardTab.Controls.Add(this.metroListView1);
-            this.KeyboardTab.Controls.Add(this.metroTextBox2);
-            this.KeyboardTab.Controls.Add(this.metroComboBox1);
-            this.KeyboardTab.Controls.Add(this.metroTextBox1);
             this.KeyboardTab.HorizontalScrollbarBarColor = true;
             this.KeyboardTab.HorizontalScrollbarHighlightOnWheel = false;
             this.KeyboardTab.HorizontalScrollbarSize = 20;
@@ -94,111 +109,128 @@
             this.KeyboardTab.Name = "KeyboardTab";
             this.KeyboardTab.Padding = new System.Windows.Forms.Padding(200);
             this.KeyboardTab.Size = new System.Drawing.Size(759, 331);
+            this.KeyboardTab.Style = MetroFramework.MetroColorStyle.Black;
             this.KeyboardTab.TabIndex = 0;
             this.KeyboardTab.Text = "Keyboard";
             this.KeyboardTab.VerticalScrollbarBarColor = true;
             this.KeyboardTab.VerticalScrollbarHighlightOnWheel = false;
             this.KeyboardTab.VerticalScrollbarSize = 10;
             // 
+            // fileSendStatus
+            // 
+            this.fileSendStatus.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.fileSendStatus.AutoSize = true;
+            this.fileSendStatus.Location = new System.Drawing.Point(230, 222);
+            this.fileSendStatus.Name = "fileSendStatus";
+            this.fileSendStatus.Size = new System.Drawing.Size(0, 0);
+            this.fileSendStatus.TabIndex = 17;
+            this.fileSendStatus.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // fileSendProgress
+            // 
+            this.fileSendProgress.Location = new System.Drawing.Point(230, 261);
+            this.fileSendProgress.Name = "fileSendProgress";
+            this.fileSendProgress.Size = new System.Drawing.Size(230, 23);
+            this.fileSendProgress.TabIndex = 16;
+            this.fileSendProgress.Tag = "";
+            this.fileSendProgress.Value = 20;
+            this.fileSendProgress.Visible = false;
+            // 
+            // metroLabel14
+            // 
+            this.metroLabel14.AutoSize = true;
+            this.metroLabel14.Location = new System.Drawing.Point(300, 130);
+            this.metroLabel14.Name = "metroLabel14";
+            this.metroLabel14.Size = new System.Drawing.Size(19, 19);
+            this.metroLabel14.TabIndex = 15;
+            this.metroLabel14.Text = "4.";
+            // 
+            // selectedSong
+            // 
+            // 
+            // 
+            // 
+            this.selectedSong.CustomButton.Image = null;
+            this.selectedSong.CustomButton.Location = new System.Drawing.Point(236, 1);
+            this.selectedSong.CustomButton.Name = "";
+            this.selectedSong.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.selectedSong.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.selectedSong.CustomButton.TabIndex = 1;
+            this.selectedSong.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.selectedSong.CustomButton.UseSelectable = true;
+            this.selectedSong.CustomButton.Visible = false;
+            this.selectedSong.Lines = new string[0];
+            this.selectedSong.Location = new System.Drawing.Point(501, 67);
+            this.selectedSong.MaxLength = 32767;
+            this.selectedSong.Name = "selectedSong";
+            this.selectedSong.PasswordChar = '\0';
+            this.selectedSong.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.selectedSong.SelectedText = "";
+            this.selectedSong.SelectionLength = 0;
+            this.selectedSong.SelectionStart = 0;
+            this.selectedSong.ShortcutsEnabled = true;
+            this.selectedSong.Size = new System.Drawing.Size(258, 23);
+            this.selectedSong.TabIndex = 14;
+            this.selectedSong.UseSelectable = true;
+            this.selectedSong.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.selectedSong.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // metroLabel13
+            // 
+            this.metroLabel13.AutoSize = true;
+            this.metroLabel13.Location = new System.Drawing.Point(501, 30);
+            this.metroLabel13.Name = "metroLabel13";
+            this.metroLabel13.Size = new System.Drawing.Size(107, 19);
+            this.metroLabel13.TabIndex = 13;
+            this.metroLabel13.Text = "3. Selected song:";
+            // 
+            // browseSongs
+            // 
+            this.browseSongs.Location = new System.Drawing.Point(300, 73);
+            this.browseSongs.Name = "browseSongs";
+            this.browseSongs.Size = new System.Drawing.Size(75, 23);
+            this.browseSongs.TabIndex = 12;
+            this.browseSongs.Text = "Browse";
+            this.browseSongs.UseSelectable = true;
+            this.browseSongs.Click += new System.EventHandler(this.browseSongs_Click);
+            // 
+            // metroLabel12
+            // 
+            this.metroLabel12.AutoSize = true;
+            this.metroLabel12.Location = new System.Drawing.Point(300, 30);
+            this.metroLabel12.Name = "metroLabel12";
+            this.metroLabel12.Size = new System.Drawing.Size(89, 19);
+            this.metroLabel12.TabIndex = 11;
+            this.metroLabel12.Text = "2. Select song";
+            // 
+            // pianoList
+            // 
+            this.pianoList.FormattingEnabled = true;
+            this.pianoList.ItemHeight = 23;
+            this.pianoList.Location = new System.Drawing.Point(12, 67);
+            this.pianoList.Name = "pianoList";
+            this.pianoList.Size = new System.Drawing.Size(169, 29);
+            this.pianoList.TabIndex = 10;
+            this.pianoList.UseSelectable = true;
+            // 
+            // metroLabel11
+            // 
+            this.metroLabel11.AutoSize = true;
+            this.metroLabel11.Location = new System.Drawing.Point(12, 30);
+            this.metroLabel11.Name = "metroLabel11";
+            this.metroLabel11.Size = new System.Drawing.Size(92, 19);
+            this.metroLabel11.TabIndex = 9;
+            this.metroLabel11.Text = "1. Select piano";
+            // 
             // playButton
             // 
-            this.playButton.Location = new System.Drawing.Point(569, 186);
+            this.playButton.Location = new System.Drawing.Point(300, 162);
             this.playButton.Name = "playButton";
-            this.playButton.Size = new System.Drawing.Size(122, 56);
+            this.playButton.Size = new System.Drawing.Size(107, 43);
             this.playButton.TabIndex = 6;
-            this.playButton.Text = "Play Song";
+            this.playButton.Text = "Load Song";
             this.playButton.UseSelectable = true;
             this.playButton.Click += new System.EventHandler(this.playButton_Click);
-            // 
-            // metroListView1
-            // 
-            this.metroListView1.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.metroListView1.FullRowSelect = true;
-            this.metroListView1.Location = new System.Drawing.Point(315, 58);
-            this.metroListView1.Name = "metroListView1";
-            this.metroListView1.OwnerDraw = true;
-            this.metroListView1.Size = new System.Drawing.Size(376, 97);
-            this.metroListView1.TabIndex = 5;
-            this.metroListView1.UseCompatibleStateImageBehavior = false;
-            this.metroListView1.UseSelectable = true;
-            // 
-            // metroTextBox2
-            // 
-            // 
-            // 
-            // 
-            this.metroTextBox2.CustomButton.Image = null;
-            this.metroTextBox2.CustomButton.Location = new System.Drawing.Point(100, 1);
-            this.metroTextBox2.CustomButton.Name = "";
-            this.metroTextBox2.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.metroTextBox2.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox2.CustomButton.TabIndex = 1;
-            this.metroTextBox2.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox2.CustomButton.UseSelectable = true;
-            this.metroTextBox2.CustomButton.Visible = false;
-            this.metroTextBox2.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.metroTextBox2.Lines = new string[] {
-        "Select a song:"};
-            this.metroTextBox2.Location = new System.Drawing.Point(314, 16);
-            this.metroTextBox2.MaxLength = 32767;
-            this.metroTextBox2.Name = "metroTextBox2";
-            this.metroTextBox2.PasswordChar = '\0';
-            this.metroTextBox2.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox2.SelectedText = "";
-            this.metroTextBox2.SelectionLength = 0;
-            this.metroTextBox2.SelectionStart = 0;
-            this.metroTextBox2.ShortcutsEnabled = true;
-            this.metroTextBox2.Size = new System.Drawing.Size(122, 23);
-            this.metroTextBox2.TabIndex = 4;
-            this.metroTextBox2.Text = "Select a song:";
-            this.metroTextBox2.UseSelectable = true;
-            this.metroTextBox2.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.metroTextBox2.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
-            // metroComboBox1
-            // 
-            this.metroComboBox1.BackColor = System.Drawing.SystemColors.Window;
-            this.metroComboBox1.FontSize = MetroFramework.MetroComboBoxSize.Small;
-            this.metroComboBox1.FormattingEnabled = true;
-            this.metroComboBox1.ItemHeight = 19;
-            this.metroComboBox1.Location = new System.Drawing.Point(14, 46);
-            this.metroComboBox1.Name = "metroComboBox1";
-            this.metroComboBox1.Size = new System.Drawing.Size(142, 25);
-            this.metroComboBox1.TabIndex = 3;
-            this.metroComboBox1.UseSelectable = true;
-            // 
-            // metroTextBox1
-            // 
-            // 
-            // 
-            // 
-            this.metroTextBox1.CustomButton.Image = null;
-            this.metroTextBox1.CustomButton.Location = new System.Drawing.Point(120, 1);
-            this.metroTextBox1.CustomButton.Name = "";
-            this.metroTextBox1.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.metroTextBox1.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox1.CustomButton.TabIndex = 1;
-            this.metroTextBox1.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox1.CustomButton.UseSelectable = true;
-            this.metroTextBox1.CustomButton.Visible = false;
-            this.metroTextBox1.FontSize = MetroFramework.MetroTextBoxSize.Medium;
-            this.metroTextBox1.Lines = new string[] {
-        "Select a keyboard:"};
-            this.metroTextBox1.Location = new System.Drawing.Point(14, 16);
-            this.metroTextBox1.MaxLength = 32767;
-            this.metroTextBox1.Name = "metroTextBox1";
-            this.metroTextBox1.PasswordChar = '\0';
-            this.metroTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox1.SelectedText = "";
-            this.metroTextBox1.SelectionLength = 0;
-            this.metroTextBox1.SelectionStart = 0;
-            this.metroTextBox1.ShortcutsEnabled = true;
-            this.metroTextBox1.Size = new System.Drawing.Size(142, 23);
-            this.metroTextBox1.TabIndex = 2;
-            this.metroTextBox1.Text = "Select a keyboard:";
-            this.metroTextBox1.UseSelectable = true;
-            this.metroTextBox1.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.metroTextBox1.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
             // midiCreationTab
             // 
@@ -229,9 +261,9 @@
             this.respMessage.ForeColor = System.Drawing.Color.Green;
             this.respMessage.Location = new System.Drawing.Point(42, 303);
             this.respMessage.Name = "respMessage";
-            this.respMessage.Size = new System.Drawing.Size(86, 19);
+            this.respMessage.Size = new System.Drawing.Size(0, 0);
             this.respMessage.TabIndex = 14;
-            this.respMessage.Text = "metroLabel11";
+            this.respMessage.UseCustomForeColor = true;
             // 
             // selectedFileText
             // 
@@ -345,6 +377,16 @@
             this.SettingsTab.VerticalScrollbarBarColor = true;
             this.SettingsTab.VerticalScrollbarHighlightOnWheel = false;
             this.SettingsTab.VerticalScrollbarSize = 10;
+            // 
+            // BrowseSave
+            // 
+            this.BrowseSave.Location = new System.Drawing.Point(435, 29);
+            this.BrowseSave.Name = "BrowseSave";
+            this.BrowseSave.Size = new System.Drawing.Size(75, 23);
+            this.BrowseSave.TabIndex = 15;
+            this.BrowseSave.Text = "Browse";
+            this.BrowseSave.UseSelectable = true;
+            this.BrowseSave.Click += new System.EventHandler(this.BrowseSave_Click);
             // 
             // metroTextBox7
             // 
@@ -557,15 +599,24 @@
             this.metroLabel1.TabIndex = 2;
             this.metroLabel1.Text = "Default MIDI save location:";
             // 
-            // BrowseSave
+            // play
             // 
-            this.BrowseSave.Location = new System.Drawing.Point(435, 29);
-            this.BrowseSave.Name = "BrowseSave";
-            this.BrowseSave.Size = new System.Drawing.Size(75, 23);
-            this.BrowseSave.TabIndex = 15;
-            this.BrowseSave.Text = "Browse";
-            this.BrowseSave.UseSelectable = true;
-            this.BrowseSave.Click += new System.EventHandler(this.BrowseSave_Click);
+            this.play.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("play.BackgroundImage")));
+            this.play.Location = new System.Drawing.Point(510, 246);
+            this.play.Name = "play";
+            this.play.Size = new System.Drawing.Size(65, 66);
+            this.play.TabIndex = 18;
+            this.play.UseSelectable = true;
+            this.play.Click += new System.EventHandler(this.play_Click);
+            // 
+            // metroLabel15
+            // 
+            this.metroLabel15.AutoSize = true;
+            this.metroLabel15.Location = new System.Drawing.Point(510, 222);
+            this.metroLabel15.Name = "metroLabel15";
+            this.metroLabel15.Size = new System.Drawing.Size(79, 19);
+            this.metroLabel15.TabIndex = 19;
+            this.metroLabel15.Text = "5. Play song";
             // 
             // PianoHero
             // 
@@ -577,6 +628,7 @@
             this.Text = "Piano Hero";
             this.metroTabControl1.ResumeLayout(false);
             this.KeyboardTab.ResumeLayout(false);
+            this.KeyboardTab.PerformLayout();
             this.midiCreationTab.ResumeLayout(false);
             this.midiCreationTab.PerformLayout();
             this.SettingsTab.ResumeLayout(false);
@@ -591,10 +643,6 @@
         private MetroFramework.Controls.MetroTabPage KeyboardTab;
         private MetroFramework.Controls.MetroTabPage midiCreationTab;
         private MetroFramework.Controls.MetroTabPage SettingsTab;
-        private MetroFramework.Controls.MetroListView metroListView1;
-        private MetroFramework.Controls.MetroTextBox metroTextBox2;
-        private MetroFramework.Controls.MetroComboBox metroComboBox1;
-        private MetroFramework.Controls.MetroTextBox metroTextBox1;
         private MetroFramework.Controls.MetroButton playButton;
         private MetroFramework.Controls.MetroButton convertButton;
         private MetroFramework.Controls.MetroTextBox metroTextBox6;
@@ -618,6 +666,17 @@
         private MetroFramework.Controls.MetroTextBox selectedFileText;
         private MetroFramework.Controls.MetroLabel respMessage;
         private MetroFramework.Controls.MetroButton BrowseSave;
+        private MetroFramework.Controls.MetroLabel metroLabel14;
+        private MetroFramework.Controls.MetroTextBox selectedSong;
+        private MetroFramework.Controls.MetroLabel metroLabel13;
+        private MetroFramework.Controls.MetroButton browseSongs;
+        private MetroFramework.Controls.MetroLabel metroLabel12;
+        private MetroFramework.Controls.MetroComboBox pianoList;
+        private MetroFramework.Controls.MetroLabel metroLabel11;
+        private MetroFramework.Controls.MetroLabel fileSendStatus;
+        private MetroFramework.Controls.MetroProgressBar fileSendProgress;
+        private MetroFramework.Controls.MetroButton play;
+        private MetroFramework.Controls.MetroLabel metroLabel15;
     }
 }
 

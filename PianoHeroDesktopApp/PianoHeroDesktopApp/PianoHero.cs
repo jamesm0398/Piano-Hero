@@ -11,6 +11,8 @@ using MetroFramework.Forms;
 using System.Configuration;
 using System.Net;
 using System.IO;
+using System.Threading;
+using System.Net.Sockets;
 
 //Program: PianoHeroDesktopApp
 //Description: This tab control driven application enables the user to convert their own wav files to midi which will allow them to 
@@ -20,6 +22,10 @@ using System.IO;
 
 namespace PianoHeroDesktopApp
 {
+
+
+   
+
     public partial class PianoHero : MetroForm
     {
 
@@ -27,6 +33,14 @@ namespace PianoHeroDesktopApp
         string defaultVolumeStr = ConfigurationManager.AppSettings["Volume"];
         string defaultPlaySpeedStr = ConfigurationManager.AppSettings["Speed"];
         string wavFile = "";
+        string midiFile = "";
+        string ctrlIpAddr = "";
+        private const int BufferSize = 1024;
+
+
+
+
+
 
 
         public PianoHero()
@@ -36,7 +50,76 @@ namespace PianoHeroDesktopApp
             int defaultPlaySpeed = Convert.ToInt32(defaultPlaySpeedStr);
 
             defaultSave.Text = defaultSaveString;
-       
+
+            //Listen for microcontrollers to be connected
+
+            //*****TCP - currently using UDP - SEE ListenUDP method*****//
+
+
+
+            //string portNumStr = ConfigurationManager.AppSettings["Port"];
+            //int portNum = Int32.Parse(portNumStr);
+
+            //Thread t = new Thread(delegate ()
+            //{
+            //    IPHostEntry host = Dns.GetHostEntry("localhost");
+            //    IPAddress ipAddress = host.AddressList[0];
+
+            //    Server server = new Server(ipAddress.ToString(), portNum);
+
+
+            //});
+
+            //t.Start();
+
+          
+
+
+
+
+        }
+
+        public struct UdpState
+        {
+            public UdpClient u;
+            public IPEndPoint e;
+        }
+
+        public static bool messageReceived = false;
+
+        public static void ReceiveCallback(IAsyncResult ar)
+        {
+            UdpClient u = ((UdpState)(ar.AsyncState)).u;
+            IPEndPoint e = ((UdpState)(ar.AsyncState)).e;
+
+            byte[] receiveBytes = u.EndReceive(ar, ref e);
+            string receiveString = Encoding.ASCII.GetString(receiveBytes);
+
+            Console.WriteLine($"Received: {receiveString}");
+            messageReceived = true;
+        }
+
+        public static void ReceiveMessages()
+        {
+
+            string portNumStr = ConfigurationManager.AppSettings["Port"];
+            int portNum = Int32.Parse(portNumStr);
+
+            // Receive a message 
+            IPEndPoint e = new IPEndPoint(IPAddress.Any, portNum);
+            UdpClient u = new UdpClient(e);
+
+            UdpState s = new UdpState();
+            s.e = e;
+            s.u = u;
+            
+            u.BeginReceive(new AsyncCallback(ReceiveCallback), s);
+
+          
+            while (!messageReceived)
+            {
+                Thread.Sleep(100);
+            }
         }
 
 
@@ -59,12 +142,12 @@ namespace PianoHeroDesktopApp
 
             //3. Download the converted file
             //4. Save that file to the default wav location
-            File.WriteAllBytes(defaultSaveString + shortnedFileName + ".midi", response);
+            File.WriteAllBytes(defaultSaveString + "\\" + shortnedFileName + ".midi", response);
 
 
             convertButton.Enabled = true;
 
-            respMessage.Text = "Your converted file is successfully saved at " + defaultSaveString + shortnedFileName + ".midi";
+            respMessage.Text = "Your converted file is successfully saved at " + defaultSaveString + "\\" + shortnedFileName + ".midi";
            
         }
 
@@ -74,15 +157,72 @@ namespace PianoHeroDesktopApp
         //Returns: none
         private void playButton_Click(object sender, EventArgs e)
         {
+            fileSendProgress.Visible = true;
+            fileSendStatus.Text = "Sending file to microcontroller, please wait...";
+
+            string portNumStr = ConfigurationManager.AppSettings["Port"];
+            int portNum = Int32.Parse(portNumStr);
+
+            //Network setup
+            byte[] SendingBuffer = null;
+            TcpClient client = null;
+
+
+            NetworkStream netstream = null;
+
+            try
+            {
+                client = new TcpClient(ctrlIpAddr, portNum);
+                netstream = client.GetStream();
+                FileStream Fs = new FileStream(wavFile, FileMode.Open, FileAccess.Read);
+                int NoOfPackets = Convert.ToInt32
+                (Math.Ceiling(Convert.ToDouble(Fs.Length) / Convert.ToDouble(BufferSize)));
+                fileSendProgress.Maximum = NoOfPackets;
+
+                int totalLength = (int)Fs.Length, CurrentPacketLength, counter = 0;
+
+                for(int i=0;i<NoOfPackets; i++)
+                {
+                    if (totalLength > BufferSize)
+                    {
+                        CurrentPacketLength = BufferSize;
+                        totalLength = totalLength - CurrentPacketLength;
+                    }
+                    else
+                        CurrentPacketLength = totalLength;
+                    SendingBuffer = new byte[CurrentPacketLength];
+                    Fs.Read(SendingBuffer, 0, CurrentPacketLength);
+                    netstream.Write(SendingBuffer, 0, (int)SendingBuffer.Length);
+                    if (fileSendProgress.Value >= fileSendProgress.Maximum)
+                        fileSendProgress.Value = fileSendProgress.Minimum;
+                    fileSendProgress.PerformStep();
+                }
+
+                fileSendStatus.Text = "Sent file to microcontroller successfully";
+                Fs.Close();
+            }
+
+            catch (Exception ex)
+            {
+                fileSendStatus.Text = "File send error: " + ex.ToString();
+            }
+
+            finally
+            {
+                netstream.Close();
+                client.Close();
+            }
+
             //1. Call microcontroller program
             //2. Send midi file using the filename selected to the microcontroller
             //3. Play the song on the LED strip using microcontroller program and have player buttons for user to control their song with
         }
 
+        //BrowseButtonClick
+        //Summary: MIDI Creation browse button. User can select a wav file they want to convert to midi
         private void browseButton_Click(object sender, EventArgs e)
         {
-            OpenFileDialog fdlg = new OpenFileDialog();
-            fdlg.Title = "Select WAV file";
+            OpenFileDialog fdlg = new OpenFileDialog();            fdlg.Title = "Select WAV file";
             fdlg.InitialDirectory = @"C:\";
             fdlg.Filter = "WAV Files|*.wav";
             fdlg.RestoreDirectory = true;
@@ -95,6 +235,12 @@ namespace PianoHeroDesktopApp
 
         }
 
+
+       
+
+
+        //BrowseSaveClick
+        //Summary: Settings menu browse button. User can select the location where their midi files should be saved
         private void BrowseSave_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fbdlg = new FolderBrowserDialog();
@@ -113,6 +259,61 @@ namespace PianoHeroDesktopApp
                 config.Save(ConfigurationSaveMode.Modified);
             }
 
+        }
+
+        //BrowseSongsClick
+        //Summary: Keyboard browse button. User can select the midi file they want to play on the piano
+        private void browseSongs_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fdlg = new OpenFileDialog(); fdlg.Title = "Select MIDI file";
+            fdlg.InitialDirectory = @"C:\";
+            fdlg.Filter = "MIDI Files|*.midi";
+            fdlg.RestoreDirectory = true;
+
+            if (fdlg.ShowDialog() == DialogResult.OK)
+            {
+                midiFile = fdlg.FileName;
+                selectedSong.Text = midiFile;
+            }
+        }
+
+        //Icon made by Those Icons from www.flaticon.com"
+        //Send a packet to the microcontroller to begin playing the song on the microcontroller
+        private void play_Click(object sender, EventArgs e)
+        {
+            string portNumStr = ConfigurationManager.AppSettings["Port"];
+            int portNum = Int32.Parse(portNumStr);
+            try
+            {
+                IPHostEntry ipHost = Dns.GetHostEntry(Dns.GetHostName());
+                IPAddress ipAddr = ipHost.AddressList[0];
+                IPEndPoint localEndPoint = new IPEndPoint(ipAddr, portNum);
+
+                Socket socket = new Socket(ipAddr.AddressFamily,
+                  SocketType.Stream, ProtocolType.Tcp);
+
+                try
+                {
+                    socket.Connect(localEndPoint);
+                    byte[] message = Encoding.ASCII.GetBytes("PLAY<EOF>");
+                    int byteSent = socket.Send(message);
+
+                    socket.Shutdown(SocketShutdown.Both);
+                    socket.Close();
+                }
+
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Socket error:" + ex.ToString());
+                }
+
+
+            }
+
+            catch(Exception ex)
+            {
+                MessageBox.Show("Socket error:" + ex.ToString());
+            }
         }
     }
 }
