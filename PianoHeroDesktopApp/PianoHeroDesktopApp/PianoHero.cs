@@ -34,7 +34,7 @@ namespace PianoHeroDesktopApp
         string defaultPlaySpeedStr = ConfigurationManager.AppSettings["Speed"];
         string wavFile = "";
         string midiFile = "";
-        string ctrlIpAddr = "";
+        string ctrlIpAddr = "192.168.0.101";
         private const int BufferSize = 1024;
 
 
@@ -174,7 +174,7 @@ namespace PianoHeroDesktopApp
             {
                 client = new TcpClient(ctrlIpAddr, portNum);
                 netstream = client.GetStream();
-                FileStream Fs = new FileStream(wavFile, FileMode.Open, FileAccess.Read);
+                FileStream Fs = new FileStream(midiFile, FileMode.Open, FileAccess.Read);
                 int NoOfPackets = Convert.ToInt32
                 (Math.Ceiling(Convert.ToDouble(Fs.Length) / Convert.ToDouble(BufferSize)));
                 fileSendProgress.Maximum = NoOfPackets;
@@ -267,7 +267,7 @@ namespace PianoHeroDesktopApp
         {
             OpenFileDialog fdlg = new OpenFileDialog(); fdlg.Title = "Select MIDI file";
             fdlg.InitialDirectory = @"C:\";
-            fdlg.Filter = "MIDI Files|*.midi";
+            fdlg.Filter = "Text Files|*.txt";
             fdlg.RestoreDirectory = true;
 
             if (fdlg.ShowDialog() == DialogResult.OK)
