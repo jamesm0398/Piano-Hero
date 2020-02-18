@@ -12,17 +12,3 @@ C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debu
 C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.exe
 C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.pdb
 C:\Users\james\Desktop\Capstone\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.PianoHero.resources
-D:\conestoga\SoftwareEngTech\Repo\school_code\semenster6\Piano-Hero\PianoHeroDesktopApp\PianoHeroDesktopApp\bin\Debug\PianoHeroDesktopApp.exe.config
-D:\conestoga\SoftwareEngTech\Repo\school_code\semenster6\Piano-Hero\PianoHeroDesktopApp\PianoHeroDesktopApp\bin\Debug\PianoHeroDesktopApp.exe
-D:\conestoga\SoftwareEngTech\Repo\school_code\semenster6\Piano-Hero\PianoHeroDesktopApp\PianoHeroDesktopApp\bin\Debug\PianoHeroDesktopApp.pdb
-D:\conestoga\SoftwareEngTech\Repo\school_code\semenster6\Piano-Hero\PianoHeroDesktopApp\PianoHeroDesktopApp\bin\Debug\MetroFramework.Design.dll
-D:\conestoga\SoftwareEngTech\Repo\school_code\semenster6\Piano-Hero\PianoHeroDesktopApp\PianoHeroDesktopApp\bin\Debug\MetroFramework.dll
-D:\conestoga\SoftwareEngTech\Repo\school_code\semenster6\Piano-Hero\PianoHeroDesktopApp\PianoHeroDesktopApp\bin\Debug\MetroFramework.Fonts.dll
-D:\conestoga\SoftwareEngTech\Repo\school_code\semenster6\Piano-Hero\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.PianoHero.resources
-D:\conestoga\SoftwareEngTech\Repo\school_code\semenster6\Piano-Hero\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.Properties.Resources.resources
-D:\conestoga\SoftwareEngTech\Repo\school_code\semenster6\Piano-Hero\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.csproj.GenerateResource.cache
-D:\conestoga\SoftwareEngTech\Repo\school_code\semenster6\Piano-Hero\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.csproj.CoreCompileInputs.cache
-D:\conestoga\SoftwareEngTech\Repo\school_code\semenster6\Piano-Hero\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.csproj.CopyComplete
-D:\conestoga\SoftwareEngTech\Repo\school_code\semenster6\Piano-Hero\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.exe
-D:\conestoga\SoftwareEngTech\Repo\school_code\semenster6\Piano-Hero\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.pdb
-D:\conestoga\SoftwareEngTech\Repo\school_code\semenster6\Piano-Hero\PianoHeroDesktopApp\PianoHeroDesktopApp\obj\Debug\PianoHeroDesktopApp.csprojAssemblyReference.cache
