@@ -34,8 +34,8 @@ namespace PianoHeroDesktopApp
         string defaultPlaySpeedStr = ConfigurationManager.AppSettings["Speed"];
         string wavFile = "";
         string midiFile = "";
-        string ctrlIpAddr = "192.168.0.101";
-        private const int BufferSize = 1024;
+        string ctrlIpAddr = "192.168.0.100";//"127.0.0.1";//
+        private const int BufferSize = 54;
 
 
 
@@ -133,7 +133,7 @@ namespace PianoHeroDesktopApp
 
             string shortnedFileName = Path.GetFileName(wavFile);
 
-            string uriString = @"http://mockwav2midi.herokuapp.com/wav2midi/";
+            string uriString = @"http://127.0.0.1:8000/wav2midi/";//@"http://mockwav2midi.herokuapp.com/wav2midi/";
             WebClient cloudService = new WebClient();
 
             //2. Upload the wav file to the service
@@ -142,7 +142,8 @@ namespace PianoHeroDesktopApp
 
             //3. Download the converted file
             //4. Save that file to the default wav location
-            File.WriteAllBytes(defaultSaveString + "\\" + shortnedFileName + ".midi", response);
+            string path = Environment.ExpandEnvironmentVariables(defaultSaveString);
+            File.WriteAllBytes(path + "\\" + shortnedFileName + ".midi", response);
 
 
             convertButton.Enabled = true;
@@ -172,27 +173,67 @@ namespace PianoHeroDesktopApp
 
             try
             {
-                client = new TcpClient(ctrlIpAddr, portNum);
-                netstream = client.GetStream();
+               // client = new TcpClient(ctrlIpAddr, portNum);
+               // netstream = client.GetStream();
                 FileStream Fs = new FileStream(midiFile, FileMode.Open, FileAccess.Read);
                 int NoOfPackets = Convert.ToInt32
                 (Math.Ceiling(Convert.ToDouble(Fs.Length) / Convert.ToDouble(BufferSize)));
                 fileSendProgress.Maximum = NoOfPackets;
 
-                int totalLength = (int)Fs.Length, CurrentPacketLength, counter = 0;
-
-                for(int i=0;i<NoOfPackets; i++)
+                long totalLength = Fs.Length, counter = 0;
+                long CurrentPacketLength = Fs.Length;//0;
+                //client.Client.SendBufferSize = BufferSize;
+                
+                int i = 0;
+                for (i=0;i<NoOfPackets; i++)
                 {
+                    
                     if (totalLength > BufferSize)
                     {
                         CurrentPacketLength = BufferSize;
                         totalLength = totalLength - CurrentPacketLength;
                     }
                     else
-                        CurrentPacketLength = totalLength;
-                    SendingBuffer = new byte[CurrentPacketLength];
-                    Fs.Read(SendingBuffer, 0, CurrentPacketLength);
-                    netstream.Write(SendingBuffer, 0, (int)SendingBuffer.Length);
+                    {
+                        CurrentPacketLength = (byte)totalLength;
+                    }
+                    
+                    
+                    byte[] mybyt = BitConverter.GetBytes(Fs.Length);
+                   // byte[] header = { 0xFF, 0x00, (byte)mybyt.Length,0xFF, 0x00 };
+                    List<byte> header = new List<byte>(13);
+                     header.Add(0xFF);
+                     header.Add(0x00);
+                     header.Add((byte)mybyt.Length);
+                     header.AddRange(BitConverter.GetBytes(CurrentPacketLength));
+                     header.Add(0xFF);
+                     header.Add(0x00);
+                    //netstream.Write(header.ToArray(), 0, (int)header.Count());
+
+                    client = new TcpClient(ctrlIpAddr, portNum);
+                    client.Client.SendBufferSize = header.Count;                   
+                    client.Client.Send(header.ToArray(), header.Count, SocketFlags.None);
+                    byte[] recv = new byte[4] { 0, 0, 0, 0 };
+                    client.Client.Receive(recv, 0, recv.Length, SocketFlags.None);
+                    if (BitConverter.ToInt32(recv,0) == 0xFFFFFF)
+                    {
+                        fileSendStatus.Text = "An error Occured";
+                        return;
+                    }
+                    client.Client.Close();
+
+                    SendingBuffer = new byte[CurrentPacketLength ];
+                    client = new TcpClient(ctrlIpAddr, portNum);
+                    client.Client.SendBufferSize = SendingBuffer.Length;
+                    Fs.Read(SendingBuffer, 0, (int)CurrentPacketLength);
+                    client.Client.Send(SendingBuffer, SendingBuffer.Length, SocketFlags.None);
+                    recv = new byte[4] { 0,0,0,0};
+                    client.Client.Receive(recv,0, recv.Length, SocketFlags.None);
+
+
+                    client.Client.Close();
+                    //client.Client.
+                    //    netstream.Write(SendingBuffer, 0, (int)SendingBuffer.Length);
                     if (fileSendProgress.Value >= fileSendProgress.Maximum)
                         fileSendProgress.Value = fileSendProgress.Minimum;
                     fileSendProgress.PerformStep();
@@ -209,8 +250,15 @@ namespace PianoHeroDesktopApp
 
             finally
             {
-                netstream.Close();
-                client.Close();
+                if (netstream != null)
+                {
+                    netstream.Close();
+                }
+                if (client != null)
+                {
+                    client.Client.Close();
+                }
+               
             }
 
             //1. Call microcontroller program
@@ -266,8 +314,8 @@ namespace PianoHeroDesktopApp
         private void browseSongs_Click(object sender, EventArgs e)
         {
             OpenFileDialog fdlg = new OpenFileDialog(); fdlg.Title = "Select MIDI file";
-            fdlg.InitialDirectory = @"C:\";
-            fdlg.Filter = "Text Files|*.txt";
+            fdlg.InitialDirectory = @"D:\";
+            //fdlg.Filter = "Text Files|*.txt|MiDI|*.midi";
             fdlg.RestoreDirectory = true;
 
             if (fdlg.ShowDialog() == DialogResult.OK)
