@@ -22,10 +22,6 @@ using System.Net.Sockets;
 
 namespace PianoHeroDesktopApp
 {
-
-
-   
-
     public partial class PianoHero : MetroForm
     {
 
@@ -36,10 +32,6 @@ namespace PianoHeroDesktopApp
         string midiFile = "";
         string ctrlIpAddr = "192.168.0.100";//"127.0.0.1";//
         private const int BufferSize = 54;
-
-
-
-
 
 
 
@@ -152,6 +144,43 @@ namespace PianoHeroDesktopApp
            
         }
 
+        /// <summary>
+        /// SendHeader
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="portNum"></param>
+        /// <param name="bodyLen"></param>
+        /// <returns></returns>
+        private int SendHeader(TcpClient client, int portNum, long bodyLen)
+        {
+            byte[] mybyt = BitConverter.GetBytes(bodyLen);
+            
+            List<byte> header = new List<byte>(13);
+            header.Add(0xFF);
+            header.Add(0x00);
+            header.Add((byte)mybyt.Length);
+            header.AddRange(BitConverter.GetBytes(bodyLen));
+            header.Add(0xFF);
+            header.Add(0x00);            
+
+            client = new TcpClient(ctrlIpAddr, portNum);
+            client.Client.SendBufferSize = header.Count;
+            client.Client.Send(header.ToArray(), header.Count, SocketFlags.None);
+
+            byte[] recv = new byte[4] { 0, 0, 0, 0 };
+            client.Client.ReceiveTimeout = 300;
+            client.Client.Receive(recv, 0, recv.Length, SocketFlags.None);
+            UInt32 o = BitConverter.ToUInt32(recv, 0);
+            if (recv[0] == 0xFF && recv[1] == 0xFF && recv[2] == 0xFF && recv[3] == 0xFF)
+            {
+                fileSendStatus.Text = "An error Occured";
+                return 0;
+            }
+            client.Client.Close();
+
+            return 1;
+        }
+
         //PlayButton_Click()
         //Summary: This method calls the cloud conversion service to upload the wav file and download the converted midi file
         //Params: sender, e
@@ -182,8 +211,15 @@ namespace PianoHeroDesktopApp
 
                 long totalLength = Fs.Length, counter = 0;
                 long CurrentPacketLength = Fs.Length;//0;
-                //client.Client.SendBufferSize = BufferSize;
-                
+                                                     //client.Client.SendBufferSize = BufferSize;
+
+
+                if (SendHeader(client, portNum, CurrentPacketLength) == 0)
+                {
+                    // microcontroller reported an error
+                    return;
+                }
+
                 int i = 0;
                 for (i=0;i<NoOfPackets; i++)
                 {
@@ -197,41 +233,45 @@ namespace PianoHeroDesktopApp
                     {
                         CurrentPacketLength = (byte)totalLength;
                     }
-                    
-                    
-                    byte[] mybyt = BitConverter.GetBytes(Fs.Length);
-                   // byte[] header = { 0xFF, 0x00, (byte)mybyt.Length,0xFF, 0x00 };
-                    List<byte> header = new List<byte>(13);
-                     header.Add(0xFF);
-                     header.Add(0x00);
-                     header.Add((byte)mybyt.Length);
-                     header.AddRange(BitConverter.GetBytes(CurrentPacketLength));
-                     header.Add(0xFF);
-                     header.Add(0x00);
-                    //netstream.Write(header.ToArray(), 0, (int)header.Count());
 
-                    client = new TcpClient(ctrlIpAddr, portNum);
-                    client.Client.SendBufferSize = header.Count;                   
-                    client.Client.Send(header.ToArray(), header.Count, SocketFlags.None);
-                    byte[] recv = new byte[4] { 0, 0, 0, 0 };
-                    client.Client.Receive(recv, 0, recv.Length, SocketFlags.None);
-                    if (BitConverter.ToInt32(recv,0) == 0xFFFFFF)
+                   if( SendHeader(client, portNum, CurrentPacketLength) == 0)
                     {
-                        fileSendStatus.Text = "An error Occured";
+                        // microcontroller reported an error
                         return;
                     }
-                    client.Client.Close();
+                   // byte[] mybyt = BitConverter.GetBytes(Fs.Length);
+                   //// byte[] header = { 0xFF, 0x00, (byte)mybyt.Length,0xFF, 0x00 };
+                   // List<byte> header = new List<byte>(13);
+                   //  header.Add(0xFF);
+                   //  header.Add(0x00);
+                   //  header.Add((byte)mybyt.Length);
+                   //  header.AddRange(BitConverter.GetBytes(CurrentPacketLength));
+                   //  header.Add(0xFF);
+                   //  header.Add(0x00);
+                   // //netstream.Write(header.ToArray(), 0, (int)header.Count());
+
+                   // client = new TcpClient(ctrlIpAddr, portNum);
+                   // client.Client.SendBufferSize = header.Count;                   
+                   // client.Client.Send(header.ToArray(), header.Count, SocketFlags.None);
+                    //byte[] recv = new byte[4] { 0, 0, 0, 0 };
+                    //client.Client.Receive(recv, 0, recv.Length, SocketFlags.None);
+                    //if (BitConverter.ToInt32(recv,0) == 0xFFFFFF)
+                    //{
+                    //    fileSendStatus.Text = "An error Occured";
+                    //    return;
+                    //}
+                    //client.Client.Close();
 
                     SendingBuffer = new byte[CurrentPacketLength ];
                     client = new TcpClient(ctrlIpAddr, portNum);
                     client.Client.SendBufferSize = SendingBuffer.Length;
                     Fs.Read(SendingBuffer, 0, (int)CurrentPacketLength);
                     client.Client.Send(SendingBuffer, SendingBuffer.Length, SocketFlags.None);
-                    recv = new byte[4] { 0,0,0,0};
+                    byte[] recv = new byte[4] { 0,0,0,0};
+                    client.Client.ReceiveTimeout = 150;
                     client.Client.Receive(recv,0, recv.Length, SocketFlags.None);
-
-
                     client.Client.Close();
+
                     //client.Client.
                     //    netstream.Write(SendingBuffer, 0, (int)SendingBuffer.Length);
                     if (fileSendProgress.Value >= fileSendProgress.Maximum)
