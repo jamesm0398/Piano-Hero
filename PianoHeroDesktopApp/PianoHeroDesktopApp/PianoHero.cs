@@ -37,11 +37,17 @@ namespace PianoHeroDesktopApp
 
         public PianoHero()
         {
+       
+       
             InitializeComponent();
+           
             int defaultVolume = Convert.ToInt32(defaultVolumeStr);
             int defaultPlaySpeed = Convert.ToInt32(defaultPlaySpeedStr);
 
             defaultSave.Text = defaultSaveString;
+
+            defaultSpeed.Value = defaultPlaySpeed;
+            defaultVol.Value = defaultVolume;
 
             //Listen for microcontrollers to be connected
 
@@ -182,7 +188,7 @@ namespace PianoHeroDesktopApp
         }
 
         //PlayButton_Click()
-        //Summary: This method calls the cloud conversion service to upload the wav file and download the converted midi file
+        //Summary: This method sends a midi file to the microcontroller 
         //Params: sender, e
         //Returns: none
         private void playButton_Click(object sender, EventArgs e)
@@ -239,6 +245,10 @@ namespace PianoHeroDesktopApp
                         // microcontroller reported an error
                         return;
                     }
+
+                   //**Previously used code**
+
+              
                    // byte[] mybyt = BitConverter.GetBytes(Fs.Length);
                    //// byte[] header = { 0xFF, 0x00, (byte)mybyt.Length,0xFF, 0x00 };
                    // List<byte> header = new List<byte>(13);
@@ -345,6 +355,7 @@ namespace PianoHeroDesktopApp
                 config.AppSettings.Settings.Remove("SaveLoc");
                 config.AppSettings.Settings.Add("SaveLoc", defaultSaveString);
                 config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
             }
 
         }
@@ -403,5 +414,218 @@ namespace PianoHeroDesktopApp
                 MessageBox.Show("Socket error:" + ex.ToString());
             }
         }
+
+        
+        //PlayKey_KeyPress
+        //Summary: Listen for a key press and assign it to the default play button
+        //Params: key press event args
+        //Returns: none
+        private void playKey_KeyPress(object sender, KeyPressEventArgs e)
+        {
+           
+            playKey.Text = e.KeyChar.ToString();
+
+            switch(e.KeyChar)
+            {
+                case (char)32:
+                    playKey.Text = "SPACE";
+                    break;
+
+
+                case (char)37:
+                    playKey.Text = "Left Arrow Key";
+                    break;
+
+            }
+
+            Configuration config =
+           ConfigurationManager.OpenExeConfiguration
+           (ConfigurationUserLevel.None);
+
+            config.AppSettings.Settings.Remove("PlayPauseButton");
+            config.AppSettings.Settings.Add("PlayPauseButton", e.KeyChar.ToString());
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+
+            string keyTest = ConfigurationManager.AppSettings["PlayPauseButton"];
+            keyTxt.Text = keyTest;
+
+
+        }
+
+        //SlowKey_KeyPress
+        //Summary: Listen for a key press and assign it to the default slower playing speed button
+        //Params: key press event args
+        //Returns: none
+        private void slowKey_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            slowKey.Text = e.KeyChar.ToString();
+
+            if (e.KeyChar == 32)
+            {
+                slowKey.Text = "SPACE";
+            }
+
+            Configuration config =
+           ConfigurationManager.OpenExeConfiguration
+           (ConfigurationUserLevel.None);
+
+            config.AppSettings.Settings.Remove("Slower");
+            config.AppSettings.Settings.Add("Slower", e.KeyChar.ToString());
+
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+
+        }
+
+        //FastKey_KeyPress
+        //Summary: Listen for a key press and assign it to the default faster playing speed button
+        //Params: key press event args
+        //Returns: none
+        private void fastKey_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            fastKey.Text = e.KeyChar.ToString();
+
+            if (e.KeyChar == 32)
+            {
+                fastKey.Text = "SPACE";
+            }
+
+            Configuration config =
+           ConfigurationManager.OpenExeConfiguration
+           (ConfigurationUserLevel.None);
+
+            config.AppSettings.Settings.Remove("Faster");
+            config.AppSettings.Settings.Add("Faster", e.KeyChar.ToString());
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+
+        }
+
+        //PlayKey_KeyDown
+        //Summary: Handle arrow key presses for assigning to play/pause key
+        //Params: key down event args
+        //Returns: none
+        private void playKey_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up)
+            {
+                playKey.Text = "Up Arrow key";
+            }
+
+            if (e.KeyCode == Keys.Down)
+            {
+                playKey.Text = "Down Arrow key";
+            }
+
+            if (e.KeyCode == Keys.Left)
+            {
+                playKey.Text = "Left Arrow key";
+            }
+
+            if (e.KeyCode == Keys.Right)
+            {
+                playKey.Text = "Right Arrow key";
+            }
+        }
+
+        //SlowKey_KeyDown
+        //Summary: Handle arrow key presses for assigning to slower key
+        //Params: key down event args
+        //Returns: none
+        private void slowKey_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up)
+            {
+                slowKey.Text = "Up Arrow key";
+            }
+
+            if (e.KeyCode == Keys.Down)
+            {
+                slowKey.Text = "Down Arrow key";
+            }
+
+            if (e.KeyCode == Keys.Left)
+            {
+                slowKey.Text = "Left Arrow key";
+            }
+
+            if (e.KeyCode == Keys.Right)
+            {
+                slowKey.Text = "Right Arrow key";
+            }
+        }
+
+        //FastKey_KeyDown
+        //Summary: Handle arrow key presses for assigning to faster key
+        //Params: key down event args
+        //Returns: none
+        private void fastKey_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up)
+            {
+                fastKey.Text = "Up Arrow key";
+            }
+
+            if (e.KeyCode == Keys.Down)
+            {
+                fastKey.Text = "Down Arrow key";
+            }
+
+            if (e.KeyCode == Keys.Left)
+            {
+                fastKey.Text = "Left Arrow key";
+            }
+
+            if (e.KeyCode == Keys.Right)
+            {
+                fastKey.Text = "Right Arrow key";
+            }
+        }
+
+
+        //DefaultSpeed_ValueChanged
+        //Summary: Modify the default speed in config based on scrollbar value
+        //Params: scrollbar event args
+        //Returns: none
+        private void defaultSpeed_ValueChanged(object sender, EventArgs e)
+        {
+            Configuration config =
+          ConfigurationManager.OpenExeConfiguration
+          (ConfigurationUserLevel.None);
+
+            config.AppSettings.Settings.Remove("Speed");
+            config.AppSettings.Settings.Add("Speed", defaultSpeed.Value.ToString());
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+
+            string speedTest = ConfigurationManager.AppSettings["Speed"];
+            speedTxt.Text = speedTest;
+        }
+
+        //DefaultVol_ValueChanged
+        //Summary: Modify the default volume in config based on scrollbar value
+        //Params: scrollbar event args
+        //Returns: none
+        private void defaultVol_ValueChanged(object sender, EventArgs e)
+        {
+            Configuration config =
+          ConfigurationManager.OpenExeConfiguration
+          (ConfigurationUserLevel.None);
+
+            config.AppSettings.Settings.Remove("Volume");
+            config.AppSettings.Settings.Add("Volume", defaultVol.Value.ToString());
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+
+            string volTest = ConfigurationManager.AppSettings["Volume"];
+            volTxt.Text = volTest;
+        }
     }
+
+
+
+
+
+
 }

@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PianoHero));
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
             this.KeyboardTab = new MetroFramework.Controls.MetroTabPage();
+            this.metroLabel15 = new MetroFramework.Controls.MetroLabel();
+            this.play = new MetroFramework.Controls.MetroButton();
             this.fileSendStatus = new MetroFramework.Controls.MetroLabel();
             this.fileSendProgress = new MetroFramework.Controls.MetroProgressBar();
             this.metroLabel14 = new MetroFramework.Controls.MetroLabel();
@@ -52,11 +54,11 @@
             this.convertButton = new MetroFramework.Controls.MetroButton();
             this.SettingsTab = new MetroFramework.Controls.MetroTabPage();
             this.BrowseSave = new MetroFramework.Controls.MetroButton();
-            this.metroTextBox7 = new MetroFramework.Controls.MetroTextBox();
+            this.fastKey = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel7 = new MetroFramework.Controls.MetroLabel();
-            this.metroTextBox6 = new MetroFramework.Controls.MetroTextBox();
+            this.slowKey = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel6 = new MetroFramework.Controls.MetroLabel();
-            this.metroTextBox5 = new MetroFramework.Controls.MetroTextBox();
+            this.playKey = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel5 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel4 = new MetroFramework.Controls.MetroLabel();
             this.defaultSave = new MetroFramework.Controls.MetroTextBox();
@@ -65,8 +67,10 @@
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-            this.play = new MetroFramework.Controls.MetroButton();
-            this.metroLabel15 = new MetroFramework.Controls.MetroLabel();
+            this.keyTxt = new MetroFramework.Controls.MetroLabel();
+            this.speedTxt = new MetroFramework.Controls.MetroLabel();
+            this.volTxt = new MetroFramework.Controls.MetroLabel();
+            this.aboutTab = new System.Windows.Forms.TabPage();
             this.metroTabControl1.SuspendLayout();
             this.KeyboardTab.SuspendLayout();
             this.midiCreationTab.SuspendLayout();
@@ -78,6 +82,7 @@
             this.metroTabControl1.Controls.Add(this.KeyboardTab);
             this.metroTabControl1.Controls.Add(this.midiCreationTab);
             this.metroTabControl1.Controls.Add(this.SettingsTab);
+            this.metroTabControl1.Controls.Add(this.aboutTab);
             this.metroTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroTabControl1.ItemSize = new System.Drawing.Size(168, 34);
             this.metroTabControl1.Location = new System.Drawing.Point(20, 60);
@@ -85,6 +90,7 @@
             this.metroTabControl1.Name = "metroTabControl1";
             this.metroTabControl1.SelectedIndex = 0;
             this.metroTabControl1.Size = new System.Drawing.Size(767, 373);
+            this.metroTabControl1.Style = MetroFramework.MetroColorStyle.Magenta;
             this.metroTabControl1.TabIndex = 0;
             this.metroTabControl1.UseSelectable = true;
             // 
@@ -115,6 +121,28 @@
             this.KeyboardTab.VerticalScrollbarBarColor = true;
             this.KeyboardTab.VerticalScrollbarHighlightOnWheel = false;
             this.KeyboardTab.VerticalScrollbarSize = 10;
+            // 
+            // metroLabel15
+            // 
+            this.metroLabel15.AutoSize = true;
+            this.metroLabel15.Location = new System.Drawing.Point(510, 222);
+            this.metroLabel15.Name = "metroLabel15";
+            this.metroLabel15.Size = new System.Drawing.Size(79, 19);
+            this.metroLabel15.TabIndex = 19;
+            this.metroLabel15.Text = "5. Play song";
+            // 
+            // play
+            // 
+            this.play.BackColor = System.Drawing.Color.Transparent;
+            this.play.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("play.BackgroundImage")));
+            this.play.ForeColor = System.Drawing.Color.Transparent;
+            this.play.Location = new System.Drawing.Point(510, 246);
+            this.play.Name = "play";
+            this.play.Size = new System.Drawing.Size(65, 66);
+            this.play.TabIndex = 18;
+            this.play.TabStop = false;
+            this.play.UseSelectable = true;
+            this.play.Click += new System.EventHandler(this.play_Click);
             // 
             // fileSendStatus
             // 
@@ -352,12 +380,15 @@
             // 
             // SettingsTab
             // 
+            this.SettingsTab.Controls.Add(this.volTxt);
+            this.SettingsTab.Controls.Add(this.speedTxt);
+            this.SettingsTab.Controls.Add(this.keyTxt);
             this.SettingsTab.Controls.Add(this.BrowseSave);
-            this.SettingsTab.Controls.Add(this.metroTextBox7);
+            this.SettingsTab.Controls.Add(this.fastKey);
             this.SettingsTab.Controls.Add(this.metroLabel7);
-            this.SettingsTab.Controls.Add(this.metroTextBox6);
+            this.SettingsTab.Controls.Add(this.slowKey);
             this.SettingsTab.Controls.Add(this.metroLabel6);
-            this.SettingsTab.Controls.Add(this.metroTextBox5);
+            this.SettingsTab.Controls.Add(this.playKey);
             this.SettingsTab.Controls.Add(this.metroLabel5);
             this.SettingsTab.Controls.Add(this.metroLabel4);
             this.SettingsTab.Controls.Add(this.defaultSave);
@@ -388,38 +419,41 @@
             this.BrowseSave.UseSelectable = true;
             this.BrowseSave.Click += new System.EventHandler(this.BrowseSave_Click);
             // 
-            // metroTextBox7
+            // fastKey
             // 
             // 
             // 
             // 
-            this.metroTextBox7.CustomButton.Image = null;
-            this.metroTextBox7.CustomButton.Location = new System.Drawing.Point(78, 1);
-            this.metroTextBox7.CustomButton.Name = "";
-            this.metroTextBox7.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.metroTextBox7.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox7.CustomButton.TabIndex = 1;
-            this.metroTextBox7.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox7.CustomButton.UseSelectable = true;
-            this.metroTextBox7.CustomButton.Visible = false;
-            this.metroTextBox7.Lines = new string[] {
+            this.fastKey.CustomButton.Image = null;
+            this.fastKey.CustomButton.Location = new System.Drawing.Point(78, 1);
+            this.fastKey.CustomButton.Name = "";
+            this.fastKey.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.fastKey.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.fastKey.CustomButton.TabIndex = 1;
+            this.fastKey.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.fastKey.CustomButton.UseSelectable = true;
+            this.fastKey.CustomButton.Visible = false;
+            this.fastKey.Lines = new string[] {
         "Up Arrow Key"};
-            this.metroTextBox7.Location = new System.Drawing.Point(179, 302);
-            this.metroTextBox7.MaxLength = 32767;
-            this.metroTextBox7.Name = "metroTextBox7";
-            this.metroTextBox7.PasswordChar = '\0';
-            this.metroTextBox7.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox7.SelectedText = "";
-            this.metroTextBox7.SelectionLength = 0;
-            this.metroTextBox7.SelectionStart = 0;
-            this.metroTextBox7.ShortcutsEnabled = true;
-            this.metroTextBox7.Size = new System.Drawing.Size(100, 23);
-            this.metroTextBox7.TabIndex = 14;
-            this.metroTextBox7.Text = "Up Arrow Key";
-            this.metroTextBox7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.metroTextBox7.UseSelectable = true;
-            this.metroTextBox7.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.metroTextBox7.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.fastKey.Location = new System.Drawing.Point(179, 302);
+            this.fastKey.MaxLength = 32767;
+            this.fastKey.Name = "fastKey";
+            this.fastKey.PasswordChar = '\0';
+            this.fastKey.ReadOnly = true;
+            this.fastKey.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.fastKey.SelectedText = "";
+            this.fastKey.SelectionLength = 0;
+            this.fastKey.SelectionStart = 0;
+            this.fastKey.ShortcutsEnabled = true;
+            this.fastKey.Size = new System.Drawing.Size(100, 23);
+            this.fastKey.TabIndex = 14;
+            this.fastKey.Text = "Up Arrow Key";
+            this.fastKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.fastKey.UseSelectable = true;
+            this.fastKey.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.fastKey.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.fastKey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fastKey_KeyDown);
+            this.fastKey.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.fastKey_KeyPress);
             // 
             // metroLabel7
             // 
@@ -430,38 +464,41 @@
             this.metroLabel7.TabIndex = 13;
             this.metroLabel7.Text = "Faster Playing Speed";
             // 
-            // metroTextBox6
+            // slowKey
             // 
             // 
             // 
             // 
-            this.metroTextBox6.CustomButton.Image = null;
-            this.metroTextBox6.CustomButton.Location = new System.Drawing.Point(78, 1);
-            this.metroTextBox6.CustomButton.Name = "";
-            this.metroTextBox6.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.metroTextBox6.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox6.CustomButton.TabIndex = 1;
-            this.metroTextBox6.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox6.CustomButton.UseSelectable = true;
-            this.metroTextBox6.CustomButton.Visible = false;
-            this.metroTextBox6.Lines = new string[] {
+            this.slowKey.CustomButton.Image = null;
+            this.slowKey.CustomButton.Location = new System.Drawing.Point(78, 1);
+            this.slowKey.CustomButton.Name = "";
+            this.slowKey.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.slowKey.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.slowKey.CustomButton.TabIndex = 1;
+            this.slowKey.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.slowKey.CustomButton.UseSelectable = true;
+            this.slowKey.CustomButton.Visible = false;
+            this.slowKey.Lines = new string[] {
         "Down Arrow Key"};
-            this.metroTextBox6.Location = new System.Drawing.Point(179, 260);
-            this.metroTextBox6.MaxLength = 32767;
-            this.metroTextBox6.Name = "metroTextBox6";
-            this.metroTextBox6.PasswordChar = '\0';
-            this.metroTextBox6.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox6.SelectedText = "";
-            this.metroTextBox6.SelectionLength = 0;
-            this.metroTextBox6.SelectionStart = 0;
-            this.metroTextBox6.ShortcutsEnabled = true;
-            this.metroTextBox6.Size = new System.Drawing.Size(100, 23);
-            this.metroTextBox6.TabIndex = 12;
-            this.metroTextBox6.Text = "Down Arrow Key";
-            this.metroTextBox6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.metroTextBox6.UseSelectable = true;
-            this.metroTextBox6.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.metroTextBox6.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.slowKey.Location = new System.Drawing.Point(179, 260);
+            this.slowKey.MaxLength = 32767;
+            this.slowKey.Name = "slowKey";
+            this.slowKey.PasswordChar = '\0';
+            this.slowKey.ReadOnly = true;
+            this.slowKey.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.slowKey.SelectedText = "";
+            this.slowKey.SelectionLength = 0;
+            this.slowKey.SelectionStart = 0;
+            this.slowKey.ShortcutsEnabled = true;
+            this.slowKey.Size = new System.Drawing.Size(100, 23);
+            this.slowKey.TabIndex = 12;
+            this.slowKey.Text = "Down Arrow Key";
+            this.slowKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.slowKey.UseSelectable = true;
+            this.slowKey.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.slowKey.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.slowKey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.slowKey_KeyDown);
+            this.slowKey.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.slowKey_KeyPress);
             // 
             // metroLabel6
             // 
@@ -472,38 +509,41 @@
             this.metroLabel6.TabIndex = 11;
             this.metroLabel6.Text = "Slower Playing Speed";
             // 
-            // metroTextBox5
+            // playKey
             // 
             // 
             // 
             // 
-            this.metroTextBox5.CustomButton.Image = null;
-            this.metroTextBox5.CustomButton.Location = new System.Drawing.Point(78, 1);
-            this.metroTextBox5.CustomButton.Name = "";
-            this.metroTextBox5.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.metroTextBox5.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.metroTextBox5.CustomButton.TabIndex = 1;
-            this.metroTextBox5.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.metroTextBox5.CustomButton.UseSelectable = true;
-            this.metroTextBox5.CustomButton.Visible = false;
-            this.metroTextBox5.Lines = new string[] {
+            this.playKey.CustomButton.Image = null;
+            this.playKey.CustomButton.Location = new System.Drawing.Point(78, 1);
+            this.playKey.CustomButton.Name = "";
+            this.playKey.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.playKey.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.playKey.CustomButton.TabIndex = 1;
+            this.playKey.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.playKey.CustomButton.UseSelectable = true;
+            this.playKey.CustomButton.Visible = false;
+            this.playKey.Lines = new string[] {
         "SPACE"};
-            this.metroTextBox5.Location = new System.Drawing.Point(179, 222);
-            this.metroTextBox5.MaxLength = 32767;
-            this.metroTextBox5.Name = "metroTextBox5";
-            this.metroTextBox5.PasswordChar = '\0';
-            this.metroTextBox5.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.metroTextBox5.SelectedText = "";
-            this.metroTextBox5.SelectionLength = 0;
-            this.metroTextBox5.SelectionStart = 0;
-            this.metroTextBox5.ShortcutsEnabled = true;
-            this.metroTextBox5.Size = new System.Drawing.Size(100, 23);
-            this.metroTextBox5.TabIndex = 10;
-            this.metroTextBox5.Text = "SPACE";
-            this.metroTextBox5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.metroTextBox5.UseSelectable = true;
-            this.metroTextBox5.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.metroTextBox5.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.playKey.Location = new System.Drawing.Point(179, 222);
+            this.playKey.MaxLength = 32767;
+            this.playKey.Name = "playKey";
+            this.playKey.PasswordChar = '\0';
+            this.playKey.ReadOnly = true;
+            this.playKey.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.playKey.SelectedText = "";
+            this.playKey.SelectionLength = 0;
+            this.playKey.SelectionStart = 0;
+            this.playKey.ShortcutsEnabled = true;
+            this.playKey.Size = new System.Drawing.Size(100, 23);
+            this.playKey.TabIndex = 10;
+            this.playKey.Text = "SPACE";
+            this.playKey.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.playKey.UseSelectable = true;
+            this.playKey.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.playKey.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            this.playKey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.playKey_KeyDown);
+            this.playKey.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.playKey_KeyPress);
             // 
             // metroLabel5
             // 
@@ -562,6 +602,7 @@
             this.defaultSpeed.Size = new System.Drawing.Size(153, 23);
             this.defaultSpeed.TabIndex = 6;
             this.defaultSpeed.Text = "metroTrackBar1";
+            this.defaultSpeed.ValueChanged += new System.EventHandler(this.defaultSpeed_ValueChanged);
             // 
             // defaultVol
             // 
@@ -571,6 +612,7 @@
             this.defaultVol.Size = new System.Drawing.Size(153, 23);
             this.defaultVol.TabIndex = 5;
             this.defaultVol.Text = "metroTrackBar1";
+            this.defaultVol.ValueChanged += new System.EventHandler(this.defaultVol_ValueChanged);
             // 
             // metroLabel3
             // 
@@ -599,32 +641,51 @@
             this.metroLabel1.TabIndex = 2;
             this.metroLabel1.Text = "Default MIDI save location:";
             // 
-            // play
+            // keyTxt
             // 
-            this.play.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("play.BackgroundImage")));
-            this.play.Location = new System.Drawing.Point(510, 246);
-            this.play.Name = "play";
-            this.play.Size = new System.Drawing.Size(65, 66);
-            this.play.TabIndex = 18;
-            this.play.UseSelectable = true;
-            this.play.Click += new System.EventHandler(this.play_Click);
+            this.keyTxt.AutoSize = true;
+            this.keyTxt.Location = new System.Drawing.Point(435, 222);
+            this.keyTxt.Name = "keyTxt";
+            this.keyTxt.Size = new System.Drawing.Size(88, 19);
+            this.keyTxt.TabIndex = 16;
+            this.keyTxt.Text = "metroLabel16";
             // 
-            // metroLabel15
+            // speedTxt
             // 
-            this.metroLabel15.AutoSize = true;
-            this.metroLabel15.Location = new System.Drawing.Point(510, 222);
-            this.metroLabel15.Name = "metroLabel15";
-            this.metroLabel15.Size = new System.Drawing.Size(79, 19);
-            this.metroLabel15.TabIndex = 19;
-            this.metroLabel15.Text = "5. Play song";
+            this.speedTxt.AutoSize = true;
+            this.speedTxt.Location = new System.Drawing.Point(465, 75);
+            this.speedTxt.Name = "speedTxt";
+            this.speedTxt.Size = new System.Drawing.Size(53, 19);
+            this.speedTxt.TabIndex = 17;
+            this.speedTxt.Text = "Speed: ";
+            // 
+            // volTxt
+            // 
+            this.volTxt.AutoSize = true;
+            this.volTxt.Location = new System.Drawing.Point(465, 122);
+            this.volTxt.Name = "volTxt";
+            this.volTxt.Size = new System.Drawing.Size(56, 19);
+            this.volTxt.TabIndex = 18;
+            this.volTxt.Text = "Volume:";
+            // 
+            // aboutTab
+            // 
+            this.aboutTab.Location = new System.Drawing.Point(4, 38);
+            this.aboutTab.Name = "aboutTab";
+            this.aboutTab.Size = new System.Drawing.Size(759, 331);
+            this.aboutTab.TabIndex = 3;
+            this.aboutTab.Text = "About";
             // 
             // PianoHero
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BackImage = global::PianoHeroDesktopApp.Properties.Resources.piano;
             this.ClientSize = new System.Drawing.Size(807, 453);
             this.Controls.Add(this.metroTabControl1);
             this.Name = "PianoHero";
+            this.Style = MetroFramework.MetroColorStyle.Magenta;
             this.Text = "Piano Hero";
             this.metroTabControl1.ResumeLayout(false);
             this.KeyboardTab.ResumeLayout(false);
@@ -645,9 +706,9 @@
         private MetroFramework.Controls.MetroTabPage SettingsTab;
         private MetroFramework.Controls.MetroButton playButton;
         private MetroFramework.Controls.MetroButton convertButton;
-        private MetroFramework.Controls.MetroTextBox metroTextBox6;
+        private MetroFramework.Controls.MetroTextBox slowKey;
         private MetroFramework.Controls.MetroLabel metroLabel6;
-        private MetroFramework.Controls.MetroTextBox metroTextBox5;
+        private MetroFramework.Controls.MetroTextBox playKey;
         private MetroFramework.Controls.MetroLabel metroLabel5;
         private MetroFramework.Controls.MetroLabel metroLabel4;
         private MetroFramework.Controls.MetroTextBox defaultSave;
@@ -656,7 +717,7 @@
         private MetroFramework.Controls.MetroLabel metroLabel3;
         private MetroFramework.Controls.MetroLabel metroLabel2;
         private MetroFramework.Controls.MetroLabel metroLabel1;
-        private MetroFramework.Controls.MetroTextBox metroTextBox7;
+        private MetroFramework.Controls.MetroTextBox fastKey;
         private MetroFramework.Controls.MetroLabel metroLabel7;
         private MetroFramework.Controls.MetroLabel metroLabel10;
         private MetroFramework.Controls.MetroLabel selectedFile;
@@ -677,6 +738,10 @@
         private MetroFramework.Controls.MetroProgressBar fileSendProgress;
         private MetroFramework.Controls.MetroButton play;
         private MetroFramework.Controls.MetroLabel metroLabel15;
+        private MetroFramework.Controls.MetroLabel keyTxt;
+        private MetroFramework.Controls.MetroLabel speedTxt;
+        private MetroFramework.Controls.MetroLabel volTxt;
+        private System.Windows.Forms.TabPage aboutTab;
     }
 }
 
