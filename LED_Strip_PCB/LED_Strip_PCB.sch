@@ -25,19 +25,13 @@ F 3 "https://cdn-shop.adafruit.com/product-files/1138/SK6812+LED+datasheet+.pdf"
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	850  2350 850  2550
-Wire Wire Line
 	1300 2550 1300 2600
-Wire Wire Line
-	650  2350 650  2550
 Wire Wire Line
 	650  2550 600  2550
 Wire Wire Line
 	600  2550 600  3200
 Wire Wire Line
 	600  3200 1300 3200
-Wire Wire Line
-	750  2350 750  2900
 Wire Wire Line
 	750  2900 1000 2900
 $Comp
@@ -262,8 +256,6 @@ Wire Wire Line
 Wire Wire Line
 	3450 2900 3250 2900
 Wire Wire Line
-	2650 2900 2450 2900
-Wire Wire Line
 	1850 2900 1600 2900
 Wire Wire Line
 	10250 2550 10250 2450
@@ -286,25 +278,166 @@ Connection ~ 10250 3250
 Wire Wire Line
 	1300 2550 2150 2550
 Wire Wire Line
-	2150 2550 2950 2550
+	2150 2550 2500 2550
 Wire Wire Line
-	2150 3200 2950 3200
+	2150 3200 2500 3200
+Wire Wire Line
+	3750 2550 4150 2550
+Wire Wire Line
+	3750 3200 4150 3200
+Wire Wire Line
+	5550 2550 6000 2550
+Wire Wire Line
+	5550 3200 6000 3200
+Wire Wire Line
+	7150 3250 7600 3250
+Wire Wire Line
+	7150 2550 7600 2550
+Wire Wire Line
+	8800 2550 9150 2550
+Wire Wire Line
+	8800 3250 9150 3250
 Wire Wire Line
 	850  2550 1300 2550
 Wire Wire Line
-	3750 2550 4550 2550
+	650  2300 650  2500
 Wire Wire Line
-	3750 3200 4550 3200
+	750  2300 750  2900
 Wire Wire Line
-	5550 2550 6400 2550
+	850  2300 850  2500
+$Comp
+L Device:C_Small C1
+U 1 1 5E6B0113
+P 750 2500
+F 0 "C1" V 521 2500 50  0000 C CNN
+F 1 "C_Small" V 612 2500 50  0000 C CNN
+F 2 "Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm" H 750 2500 50  0001 C CNN
+F 3 "~" H 750 2500 50  0001 C CNN
+	1    750  2500
+	0    1    1    0   
+$EndComp
+Connection ~ 850  2500
 Wire Wire Line
-	5550 3200 6400 3200
+	850  2500 850  2550
+Connection ~ 650  2500
 Wire Wire Line
-	7150 3250 8000 3250
+	650  2500 650  2550
+$Comp
+L Connector:Conn_01x03_Female J1
+U 1 1 5E6B7242
+P 750 2100
+F 0 "J1" V 688 1912 50  0000 R CNN
+F 1 "Conn_01x03_Female" V 597 1912 50  0000 R CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 750 2100 50  0001 C CNN
+F 3 "~" H 750 2100 50  0001 C CNN
+	1    750  2100
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5E6BF639
+P 2500 2900
+F 0 "C?" H 2408 2854 50  0000 R CNN
+F 1 "C_Small" H 2408 2945 50  0000 R CNN
+F 2 "Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm" H 2500 2900 50  0001 C CNN
+F 3 "~" H 2500 2900 50  0001 C CNN
+	1    2500 2900
+	-1   0    0    1   
+$EndComp
 Wire Wire Line
-	7150 2550 8000 2550
+	2450 2900 2650 2900
+$Comp
+L Device:C_Small C?
+U 1 1 5E6C0EB8
+P 4150 2900
+F 0 "C?" H 4058 2854 50  0000 R CNN
+F 1 "C_Small" H 4058 2945 50  0000 R CNN
+F 2 "Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm" H 4150 2900 50  0001 C CNN
+F 3 "~" H 4150 2900 50  0001 C CNN
+	1    4150 2900
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5E6C141B
+P 6000 2950
+F 0 "C?" H 5908 2904 50  0000 R CNN
+F 1 "C_Small" H 5908 2995 50  0000 R CNN
+F 2 "Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm" H 6000 2950 50  0001 C CNN
+F 3 "~" H 6000 2950 50  0001 C CNN
+	1    6000 2950
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5E6C1777
+P 7600 2950
+F 0 "C?" H 7508 2904 50  0000 R CNN
+F 1 "C_Small" H 7508 2995 50  0000 R CNN
+F 2 "Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm" H 7600 2950 50  0001 C CNN
+F 3 "~" H 7600 2950 50  0001 C CNN
+	1    7600 2950
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5E6C1AD9
+P 9150 2950
+F 0 "C?" H 9058 2904 50  0000 R CNN
+F 1 "C_Small" H 9058 2995 50  0000 R CNN
+F 2 "Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm" H 9150 2950 50  0001 C CNN
+F 3 "~" H 9150 2950 50  0001 C CNN
+	1    9150 2950
+	-1   0    0    1   
+$EndComp
 Wire Wire Line
-	8800 2550 9550 2550
+	9150 3050 9150 3250
+Connection ~ 9150 3250
 Wire Wire Line
-	8800 3250 9550 3250
+	9150 3250 9550 3250
+Wire Wire Line
+	9150 2850 9150 2550
+Connection ~ 9150 2550
+Wire Wire Line
+	9150 2550 9550 2550
+Wire Wire Line
+	7600 2850 7600 2550
+Connection ~ 7600 2550
+Wire Wire Line
+	7600 2550 8000 2550
+Wire Wire Line
+	7600 3050 7600 3250
+Connection ~ 7600 3250
+Wire Wire Line
+	7600 3250 8000 3250
+Wire Wire Line
+	6000 3050 6000 3200
+Connection ~ 6000 3200
+Wire Wire Line
+	6000 3200 6400 3200
+Wire Wire Line
+	6000 2850 6000 2550
+Connection ~ 6000 2550
+Wire Wire Line
+	6000 2550 6400 2550
+Wire Wire Line
+	4150 3000 4150 3200
+Connection ~ 4150 3200
+Wire Wire Line
+	4150 3200 4550 3200
+Wire Wire Line
+	4150 2800 4150 2550
+Connection ~ 4150 2550
+Wire Wire Line
+	4150 2550 4550 2550
+Wire Wire Line
+	2500 3000 2500 3200
+Connection ~ 2500 3200
+Wire Wire Line
+	2500 3200 2950 3200
+Wire Wire Line
+	2500 2800 2500 2550
+Connection ~ 2500 2550
+Wire Wire Line
+	2500 2550 2950 2550
 $EndSCHEMATC
