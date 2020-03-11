@@ -334,10 +334,10 @@ F 3 "~" H 750 2100 50  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L Device:C_Small C?
+L Device:C_Small C2
 U 1 1 5E6BF639
 P 2500 2900
-F 0 "C?" H 2408 2854 50  0000 R CNN
+F 0 "C2" H 2408 2854 50  0000 R CNN
 F 1 "C_Small" H 2408 2945 50  0000 R CNN
 F 2 "Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm" H 2500 2900 50  0001 C CNN
 F 3 "~" H 2500 2900 50  0001 C CNN
@@ -347,10 +347,10 @@ $EndComp
 Wire Wire Line
 	2450 2900 2650 2900
 $Comp
-L Device:C_Small C?
+L Device:C_Small C3
 U 1 1 5E6C0EB8
 P 4150 2900
-F 0 "C?" H 4058 2854 50  0000 R CNN
+F 0 "C3" H 4058 2854 50  0000 R CNN
 F 1 "C_Small" H 4058 2945 50  0000 R CNN
 F 2 "Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm" H 4150 2900 50  0001 C CNN
 F 3 "~" H 4150 2900 50  0001 C CNN
@@ -358,10 +358,10 @@ F 3 "~" H 4150 2900 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L Device:C_Small C?
+L Device:C_Small C4
 U 1 1 5E6C141B
 P 6000 2950
-F 0 "C?" H 5908 2904 50  0000 R CNN
+F 0 "C4" H 5908 2904 50  0000 R CNN
 F 1 "C_Small" H 5908 2995 50  0000 R CNN
 F 2 "Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm" H 6000 2950 50  0001 C CNN
 F 3 "~" H 6000 2950 50  0001 C CNN
@@ -369,10 +369,10 @@ F 3 "~" H 6000 2950 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L Device:C_Small C?
+L Device:C_Small C5
 U 1 1 5E6C1777
 P 7600 2950
-F 0 "C?" H 7508 2904 50  0000 R CNN
+F 0 "C5" H 7508 2904 50  0000 R CNN
 F 1 "C_Small" H 7508 2995 50  0000 R CNN
 F 2 "Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm" H 7600 2950 50  0001 C CNN
 F 3 "~" H 7600 2950 50  0001 C CNN
@@ -380,10 +380,10 @@ F 3 "~" H 7600 2950 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L Device:C_Small C?
+L Device:C_Small C6
 U 1 1 5E6C1AD9
 P 9150 2950
-F 0 "C?" H 9058 2904 50  0000 R CNN
+F 0 "C6" H 9058 2904 50  0000 R CNN
 F 1 "C_Small" H 9058 2995 50  0000 R CNN
 F 2 "Capacitor_THT:C_Disc_D4.3mm_W1.9mm_P5.00mm" H 9150 2950 50  0001 C CNN
 F 3 "~" H 9150 2950 50  0001 C CNN
@@ -440,4 +440,15 @@ Wire Wire Line
 Connection ~ 2500 2550
 Wire Wire Line
 	2500 2550 2950 2550
+$Comp
+L Connector:Conn_01x03_Female J2
+U 1 1 5E6D8263
+P 10350 2250
+F 0 "J2" V 10288 2062 50  0000 R CNN
+F 1 "Conn_01x03_Female" V 10197 2062 50  0000 R CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 10350 2250 50  0001 C CNN
+F 3 "~" H 10350 2250 50  0001 C CNN
+	1    10350 2250
+	0    -1   -1   0   
+$EndComp
 $EndSCHEMATC
