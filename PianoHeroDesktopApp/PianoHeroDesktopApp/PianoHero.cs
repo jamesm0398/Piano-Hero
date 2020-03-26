@@ -32,7 +32,35 @@ namespace PianoHeroDesktopApp
         string midiFile = "";
         string ctrlIpAddr = "192.168.0.100";//"127.0.0.1";//
         private const int BufferSize = 54;
+        string state = "Stopped";
 
+        System.Windows.Forms.Timer animationTimer = new System.Windows.Forms.Timer
+        {
+            Interval = 10
+        };
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+            int x = pausePlayPB.Location.X;
+            int y = pausePlayPB.Location.Y;
+
+            int fX = fasterButton.Location.X;
+            int fY = fasterButton.Location.Y;
+
+            int sX = slowerPB.Location.X;
+            int sY = slowerPB.Location.Y;
+
+
+            pausePlayPB.Location = new Point(x, y-25);
+            fasterButton.Location = new Point(fX, fY - 25);
+            slowerPB.Location = new Point(sX, sY - 25);
+
+            if (y < 280 && fY < 280 && sY < 280)
+                animationTimer.Stop();
+
+            
+
+        }
 
 
         public PianoHero()
@@ -41,6 +69,9 @@ namespace PianoHeroDesktopApp
        
             InitializeComponent();
            
+            animationTimer.Tick += new EventHandler(timer_Tick);
+
+          
             int defaultVolume = Convert.ToInt32(defaultVolumeStr);
             int defaultPlaySpeed = Convert.ToInt32(defaultPlaySpeedStr);
 
@@ -284,12 +315,12 @@ namespace PianoHeroDesktopApp
 
                     //client.Client.
                     //    netstream.Write(SendingBuffer, 0, (int)SendingBuffer.Length);
-                    if (fileSendProgress.Value >= fileSendProgress.Maximum)
-                        fileSendProgress.Value = fileSendProgress.Minimum;
+                   
                     fileSendProgress.PerformStep();
                 }
 
-                fileSendStatus.Text = "Sent file to microcontroller successfully";
+                fileSendProgress.Value = 100;
+                fileSendProgress.Text = "Sent file successfully";
                 Fs.Close();
             }
 
@@ -316,6 +347,8 @@ namespace PianoHeroDesktopApp
             //3. Play the song on the LED strip using microcontroller program and have player buttons for user to control their song with
         }
 
+
+  
         //BrowseButtonClick
         //Summary: MIDI Creation browse button. User can select a wav file they want to convert to midi
         private void browseButton_Click(object sender, EventArgs e)
@@ -376,43 +409,65 @@ namespace PianoHeroDesktopApp
             }
         }
 
-        //Icon made by Those Icons from www.flaticon.com"
+        //Icon made by https://www.flaticon.com/authors/those-icons"
         //Send a packet to the microcontroller to begin playing the song on the microcontroller
         private void play_Click(object sender, EventArgs e)
         {
+
+            pausePlayPB.Show();
+            fasterButton.Show();
+            animationTimer.Start();
+
+            state = "Playing";
+
+            songProgress.Show();
+
+            //Network setup
             string portNumStr = ConfigurationManager.AppSettings["Port"];
             int portNum = Int32.Parse(portNumStr);
+            byte[] SendingBuffer = null;
+            TcpClient client = null;
+
+
+            NetworkStream netstream = null;
+
             try
             {
-                IPHostEntry ipHost = Dns.GetHostEntry(Dns.GetHostName());
-                IPAddress ipAddr = ipHost.AddressList[0];
-                IPEndPoint localEndPoint = new IPEndPoint(ipAddr, portNum);
-
-                Socket socket = new Socket(ipAddr.AddressFamily,
-                  SocketType.Stream, ProtocolType.Tcp);
-
-                try
+                if (SendHeader(client, portNum, 32) == 0)
                 {
-                    socket.Connect(localEndPoint);
-                    byte[] message = Encoding.ASCII.GetBytes("PLAY<EOF>");
-                    int byteSent = socket.Send(message);
-
-                    socket.Shutdown(SocketShutdown.Both);
-                    socket.Close();
+                    // microcontroller reported an error
+                    return;
                 }
 
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Socket error:" + ex.ToString());
-                }
-
-
+                SendingBuffer = new byte[32];
+                client = new TcpClient(ctrlIpAddr, portNum);
+                client.Client.SendBufferSize = SendingBuffer.Length;
+                SendingBuffer = Encoding.ASCII.GetBytes("PLAY");
+                client.Client.Send(SendingBuffer, SendingBuffer.Length, SocketFlags.None);
+                byte[] recv = new byte[4] { 0, 0, 0, 0 };
+                client.Client.ReceiveTimeout = 150;
+                client.Client.Receive(recv, 0, recv.Length, SocketFlags.None);
+                client.Client.Close();
             }
 
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("Socket error:" + ex.ToString());
+                fileSendStatus.Text = "Play error: " + ex.ToString();
             }
+
+            finally
+            {
+                if (netstream != null)
+                {
+                    netstream.Close();
+                }
+                if (client != null)
+                {
+                    client.Client.Close();
+                }
+
+            }
+
         }
 
         
@@ -620,6 +675,101 @@ namespace PianoHeroDesktopApp
 
             string volTest = ConfigurationManager.AppSettings["Volume"];
             volTxt.Text = volTest;
+        }
+
+        //Pause/play button whilst song is playing
+        private void pausePlayPB_Click(object sender, EventArgs e)
+        {
+            if (state == "Playing")
+            {
+
+                this.pausePlayPB.Image = Image.FromFile(Application.StartupPath + "\\" + "play-button-black.png");
+                state = "Stopped";
+            }
+
+            else
+            {
+                this.pausePlayPB.Image = Image.FromFile(Application.StartupPath + "\\" + "pause.png");
+                state = "Playing";
+            }
+        }
+
+        public void SendToController(string text)
+        {
+            //Network setup
+            string portNumStr = ConfigurationManager.AppSettings["Port"];
+            int portNum = Int32.Parse(portNumStr);
+            byte[] SendingBuffer = null;
+            TcpClient client = null;
+
+
+            NetworkStream netstream = null;
+
+            try
+            {
+                if (SendHeader(client, portNum, 32) == 0)
+                {
+                    // microcontroller reported an error
+                    return;
+                }
+
+                SendingBuffer = new byte[32];
+                client = new TcpClient(ctrlIpAddr, portNum);
+                client.Client.SendBufferSize = SendingBuffer.Length;
+                SendingBuffer = Encoding.ASCII.GetBytes(text);
+                client.Client.Send(SendingBuffer, SendingBuffer.Length, SocketFlags.None);
+                byte[] recv = new byte[4] { 0, 0, 0, 0 };
+                client.Client.ReceiveTimeout = 150;
+                client.Client.Receive(recv, 0, recv.Length, SocketFlags.None);
+                client.Client.Close();
+            }
+
+            catch (Exception ex)
+            {
+                fileSendStatus.Text = "Play error: " + ex.ToString();
+            }
+
+            finally
+            {
+                if (netstream != null)
+                {
+                    netstream.Close();
+                }
+                if (client != null)
+                {
+                    client.Client.Close();
+                }
+
+            }
+
+        }
+
+        private void PianoHero_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            string pauseplay = ConfigurationManager.AppSettings["PlayPauseButton"];
+            int pausePlayChar = Convert.ToInt32(pauseplay);
+
+            if (state == "Playing")
+            {
+               
+
+                if(pausePlayChar == e.KeyChar)
+                {
+                    SendToController("PAUSE");
+
+                }
+            }
+
+            if (state == "Pause")
+            {
+               
+
+                if (pausePlayChar == e.KeyChar)
+                {
+                    SendToController("PLAY");
+
+                }
+            }
         }
     }
 

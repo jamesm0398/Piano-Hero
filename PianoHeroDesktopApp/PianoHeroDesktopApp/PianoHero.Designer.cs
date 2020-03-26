@@ -31,8 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PianoHero));
             this.metroTabControl1 = new MetroFramework.Controls.MetroTabControl();
             this.KeyboardTab = new MetroFramework.Controls.MetroTabPage();
+            this.slowerPB = new System.Windows.Forms.PictureBox();
+            this.songProgress = new MetroFramework.Controls.MetroProgressBar();
+            this.fasterButton = new System.Windows.Forms.PictureBox();
+            this.pausePlayPB = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.metroLabel15 = new MetroFramework.Controls.MetroLabel();
-            this.play = new MetroFramework.Controls.MetroButton();
             this.fileSendStatus = new MetroFramework.Controls.MetroLabel();
             this.fileSendProgress = new MetroFramework.Controls.MetroProgressBar();
             this.metroLabel14 = new MetroFramework.Controls.MetroLabel();
@@ -53,6 +57,9 @@
             this.metroLabel8 = new MetroFramework.Controls.MetroLabel();
             this.convertButton = new MetroFramework.Controls.MetroButton();
             this.SettingsTab = new MetroFramework.Controls.MetroTabPage();
+            this.volTxt = new MetroFramework.Controls.MetroLabel();
+            this.speedTxt = new MetroFramework.Controls.MetroLabel();
+            this.keyTxt = new MetroFramework.Controls.MetroLabel();
             this.BrowseSave = new MetroFramework.Controls.MetroButton();
             this.fastKey = new MetroFramework.Controls.MetroTextBox();
             this.metroLabel7 = new MetroFramework.Controls.MetroLabel();
@@ -67,14 +74,30 @@
             this.metroLabel3 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
-            this.keyTxt = new MetroFramework.Controls.MetroLabel();
-            this.speedTxt = new MetroFramework.Controls.MetroLabel();
-            this.volTxt = new MetroFramework.Controls.MetroLabel();
-            this.aboutTab = new System.Windows.Forms.TabPage();
+            this.About = new MetroFramework.Controls.MetroTabPage();
+            this.metroLabel26 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel25 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel24 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel23 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel22 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel21 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel20 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel19 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel18 = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel17 = new MetroFramework.Controls.MetroLabel();
+            this.metroTile1 = new MetroFramework.Controls.MetroTile();
+            this.metroLabel16 = new MetroFramework.Controls.MetroLabel();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.metroTabControl1.SuspendLayout();
             this.KeyboardTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.slowerPB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fasterButton)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pausePlayPB)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.midiCreationTab.SuspendLayout();
             this.SettingsTab.SuspendLayout();
+            this.About.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // metroTabControl1
@@ -82,7 +105,7 @@
             this.metroTabControl1.Controls.Add(this.KeyboardTab);
             this.metroTabControl1.Controls.Add(this.midiCreationTab);
             this.metroTabControl1.Controls.Add(this.SettingsTab);
-            this.metroTabControl1.Controls.Add(this.aboutTab);
+            this.metroTabControl1.Controls.Add(this.About);
             this.metroTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.metroTabControl1.ItemSize = new System.Drawing.Size(168, 34);
             this.metroTabControl1.Location = new System.Drawing.Point(20, 60);
@@ -96,8 +119,12 @@
             // 
             // KeyboardTab
             // 
+            this.KeyboardTab.Controls.Add(this.slowerPB);
+            this.KeyboardTab.Controls.Add(this.songProgress);
+            this.KeyboardTab.Controls.Add(this.fasterButton);
+            this.KeyboardTab.Controls.Add(this.pausePlayPB);
+            this.KeyboardTab.Controls.Add(this.pictureBox1);
             this.KeyboardTab.Controls.Add(this.metroLabel15);
-            this.KeyboardTab.Controls.Add(this.play);
             this.KeyboardTab.Controls.Add(this.fileSendStatus);
             this.KeyboardTab.Controls.Add(this.fileSendProgress);
             this.KeyboardTab.Controls.Add(this.metroLabel14);
@@ -122,27 +149,70 @@
             this.KeyboardTab.VerticalScrollbarHighlightOnWheel = false;
             this.KeyboardTab.VerticalScrollbarSize = 10;
             // 
+            // slowerPB
+            // 
+            this.slowerPB.BackColor = System.Drawing.Color.Transparent;
+            this.slowerPB.Image = ((System.Drawing.Image)(resources.GetObject("slowerPB.Image")));
+            this.slowerPB.Location = new System.Drawing.Point(217, 400);
+            this.slowerPB.Name = "slowerPB";
+            this.slowerPB.Size = new System.Drawing.Size(61, 50);
+            this.slowerPB.TabIndex = 24;
+            this.slowerPB.TabStop = false;
+            // 
+            // songProgress
+            // 
+            this.songProgress.Location = new System.Drawing.Point(201, 317);
+            this.songProgress.Name = "songProgress";
+            this.songProgress.Size = new System.Drawing.Size(304, 11);
+            this.songProgress.Style = MetroFramework.MetroColorStyle.Magenta;
+            this.songProgress.TabIndex = 23;
+            this.songProgress.Visible = false;
+            // 
+            // fasterButton
+            // 
+            this.fasterButton.BackColor = System.Drawing.Color.Transparent;
+            this.fasterButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.fasterButton.Image = ((System.Drawing.Image)(resources.GetObject("fasterButton.Image")));
+            this.fasterButton.Location = new System.Drawing.Point(438, 400);
+            this.fasterButton.Name = "fasterButton";
+            this.fasterButton.Size = new System.Drawing.Size(67, 65);
+            this.fasterButton.TabIndex = 22;
+            this.fasterButton.TabStop = false;
+            this.fasterButton.Visible = false;
+            // 
+            // pausePlayPB
+            // 
+            this.pausePlayPB.BackColor = System.Drawing.Color.Transparent;
+            this.pausePlayPB.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pausePlayPB.Image = ((System.Drawing.Image)(resources.GetObject("pausePlayPB.Image")));
+            this.pausePlayPB.Location = new System.Drawing.Point(325, 400);
+            this.pausePlayPB.Name = "pausePlayPB";
+            this.pausePlayPB.Size = new System.Drawing.Size(64, 67);
+            this.pausePlayPB.TabIndex = 21;
+            this.pausePlayPB.TabStop = false;
+            this.pausePlayPB.Visible = false;
+            this.pausePlayPB.Click += new System.EventHandler(this.pausePlayPB_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.White;
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(477, 161);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(67, 65);
+            this.pictureBox1.TabIndex = 20;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.play_Click);
+            // 
             // metroLabel15
             // 
             this.metroLabel15.AutoSize = true;
-            this.metroLabel15.Location = new System.Drawing.Point(510, 222);
+            this.metroLabel15.Location = new System.Drawing.Point(477, 130);
             this.metroLabel15.Name = "metroLabel15";
             this.metroLabel15.Size = new System.Drawing.Size(79, 19);
             this.metroLabel15.TabIndex = 19;
             this.metroLabel15.Text = "5. Play song";
-            // 
-            // play
-            // 
-            this.play.BackColor = System.Drawing.Color.Transparent;
-            this.play.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("play.BackgroundImage")));
-            this.play.ForeColor = System.Drawing.Color.Transparent;
-            this.play.Location = new System.Drawing.Point(510, 246);
-            this.play.Name = "play";
-            this.play.Size = new System.Drawing.Size(65, 66);
-            this.play.TabIndex = 18;
-            this.play.TabStop = false;
-            this.play.UseSelectable = true;
-            this.play.Click += new System.EventHandler(this.play_Click);
             // 
             // fileSendStatus
             // 
@@ -156,18 +226,17 @@
             // 
             // fileSendProgress
             // 
-            this.fileSendProgress.Location = new System.Drawing.Point(230, 261);
+            this.fileSendProgress.Location = new System.Drawing.Point(119, 203);
             this.fileSendProgress.Name = "fileSendProgress";
             this.fileSendProgress.Size = new System.Drawing.Size(230, 23);
             this.fileSendProgress.TabIndex = 16;
             this.fileSendProgress.Tag = "";
-            this.fileSendProgress.Value = 20;
             this.fileSendProgress.Visible = false;
             // 
             // metroLabel14
             // 
             this.metroLabel14.AutoSize = true;
-            this.metroLabel14.Location = new System.Drawing.Point(300, 130);
+            this.metroLabel14.Location = new System.Drawing.Point(162, 130);
             this.metroLabel14.Name = "metroLabel14";
             this.metroLabel14.Size = new System.Drawing.Size(19, 19);
             this.metroLabel14.TabIndex = 15;
@@ -188,10 +257,11 @@
             this.selectedSong.CustomButton.UseSelectable = true;
             this.selectedSong.CustomButton.Visible = false;
             this.selectedSong.Lines = new string[0];
-            this.selectedSong.Location = new System.Drawing.Point(501, 67);
+            this.selectedSong.Location = new System.Drawing.Point(498, 67);
             this.selectedSong.MaxLength = 32767;
             this.selectedSong.Name = "selectedSong";
             this.selectedSong.PasswordChar = '\0';
+            this.selectedSong.ReadOnly = true;
             this.selectedSong.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.selectedSong.SelectedText = "";
             this.selectedSong.SelectionLength = 0;
@@ -206,7 +276,7 @@
             // metroLabel13
             // 
             this.metroLabel13.AutoSize = true;
-            this.metroLabel13.Location = new System.Drawing.Point(501, 30);
+            this.metroLabel13.Location = new System.Drawing.Point(498, 30);
             this.metroLabel13.Name = "metroLabel13";
             this.metroLabel13.Size = new System.Drawing.Size(107, 19);
             this.metroLabel13.TabIndex = 13;
@@ -252,7 +322,7 @@
             // 
             // playButton
             // 
-            this.playButton.Location = new System.Drawing.Point(300, 162);
+            this.playButton.Location = new System.Drawing.Point(175, 152);
             this.playButton.Name = "playButton";
             this.playButton.Size = new System.Drawing.Size(107, 43);
             this.playButton.TabIndex = 6;
@@ -408,6 +478,33 @@
             this.SettingsTab.VerticalScrollbarBarColor = true;
             this.SettingsTab.VerticalScrollbarHighlightOnWheel = false;
             this.SettingsTab.VerticalScrollbarSize = 10;
+            // 
+            // volTxt
+            // 
+            this.volTxt.AutoSize = true;
+            this.volTxt.Location = new System.Drawing.Point(465, 122);
+            this.volTxt.Name = "volTxt";
+            this.volTxt.Size = new System.Drawing.Size(56, 19);
+            this.volTxt.TabIndex = 18;
+            this.volTxt.Text = "Volume:";
+            // 
+            // speedTxt
+            // 
+            this.speedTxt.AutoSize = true;
+            this.speedTxt.Location = new System.Drawing.Point(465, 75);
+            this.speedTxt.Name = "speedTxt";
+            this.speedTxt.Size = new System.Drawing.Size(53, 19);
+            this.speedTxt.TabIndex = 17;
+            this.speedTxt.Text = "Speed: ";
+            // 
+            // keyTxt
+            // 
+            this.keyTxt.AutoSize = true;
+            this.keyTxt.Location = new System.Drawing.Point(435, 222);
+            this.keyTxt.Name = "keyTxt";
+            this.keyTxt.Size = new System.Drawing.Size(88, 19);
+            this.keyTxt.TabIndex = 16;
+            this.keyTxt.Text = "metroLabel16";
             // 
             // BrowseSave
             // 
@@ -641,40 +738,168 @@
             this.metroLabel1.TabIndex = 2;
             this.metroLabel1.Text = "Default MIDI save location:";
             // 
-            // keyTxt
+            // About
             // 
-            this.keyTxt.AutoSize = true;
-            this.keyTxt.Location = new System.Drawing.Point(435, 222);
-            this.keyTxt.Name = "keyTxt";
-            this.keyTxt.Size = new System.Drawing.Size(88, 19);
-            this.keyTxt.TabIndex = 16;
-            this.keyTxt.Text = "metroLabel16";
+            this.About.Controls.Add(this.metroLabel26);
+            this.About.Controls.Add(this.metroLabel25);
+            this.About.Controls.Add(this.metroLabel24);
+            this.About.Controls.Add(this.metroLabel23);
+            this.About.Controls.Add(this.metroLabel22);
+            this.About.Controls.Add(this.metroLabel21);
+            this.About.Controls.Add(this.metroLabel20);
+            this.About.Controls.Add(this.metroLabel19);
+            this.About.Controls.Add(this.metroLabel18);
+            this.About.Controls.Add(this.metroLabel17);
+            this.About.Controls.Add(this.metroTile1);
+            this.About.Controls.Add(this.metroLabel16);
+            this.About.HorizontalScrollbarBarColor = true;
+            this.About.HorizontalScrollbarHighlightOnWheel = false;
+            this.About.HorizontalScrollbarSize = 10;
+            this.About.Location = new System.Drawing.Point(4, 38);
+            this.About.Name = "About";
+            this.About.Size = new System.Drawing.Size(759, 331);
+            this.About.TabIndex = 3;
+            this.About.Text = "About";
+            this.About.VerticalScrollbarBarColor = true;
+            this.About.VerticalScrollbarHighlightOnWheel = false;
+            this.About.VerticalScrollbarSize = 10;
             // 
-            // speedTxt
+            // metroLabel26
             // 
-            this.speedTxt.AutoSize = true;
-            this.speedTxt.Location = new System.Drawing.Point(465, 75);
-            this.speedTxt.Name = "speedTxt";
-            this.speedTxt.Size = new System.Drawing.Size(53, 19);
-            this.speedTxt.TabIndex = 17;
-            this.speedTxt.Text = "Speed: ";
+            this.metroLabel26.AutoSize = true;
+            this.metroLabel26.Location = new System.Drawing.Point(185, 211);
+            this.metroLabel26.Name = "metroLabel26";
+            this.metroLabel26.Size = new System.Drawing.Size(181, 19);
+            this.metroLabel26.TabIndex = 13;
+            this.metroLabel26.Text = "Created using LogoMakr.com";
             // 
-            // volTxt
+            // metroLabel25
             // 
-            this.volTxt.AutoSize = true;
-            this.volTxt.Location = new System.Drawing.Point(465, 122);
-            this.volTxt.Name = "volTxt";
-            this.volTxt.Size = new System.Drawing.Size(56, 19);
-            this.volTxt.TabIndex = 18;
-            this.volTxt.Text = "Volume:";
+            this.metroLabel25.AutoSize = true;
+            this.metroLabel25.BackColor = System.Drawing.Color.Magenta;
+            this.metroLabel25.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.metroLabel25.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.metroLabel25.ForeColor = System.Drawing.Color.Magenta;
+            this.metroLabel25.Location = new System.Drawing.Point(151, 211);
+            this.metroLabel25.Name = "metroLabel25";
+            this.metroLabel25.Size = new System.Drawing.Size(19, 25);
+            this.metroLabel25.Style = MetroFramework.MetroColorStyle.Magenta;
+            this.metroLabel25.TabIndex = 12;
+            this.metroLabel25.Text = "-";
             // 
-            // aboutTab
+            // metroLabel24
             // 
-            this.aboutTab.Location = new System.Drawing.Point(4, 38);
-            this.aboutTab.Name = "aboutTab";
-            this.aboutTab.Size = new System.Drawing.Size(759, 331);
-            this.aboutTab.TabIndex = 3;
-            this.aboutTab.Text = "About";
+            this.metroLabel24.AutoSize = true;
+            this.metroLabel24.Location = new System.Drawing.Point(4, 211);
+            this.metroLabel24.Name = "metroLabel24";
+            this.metroLabel24.Size = new System.Drawing.Size(39, 19);
+            this.metroLabel24.TabIndex = 11;
+            this.metroLabel24.Text = "Logo";
+            // 
+            // metroLabel23
+            // 
+            this.metroLabel23.AutoSize = true;
+            this.metroLabel23.Location = new System.Drawing.Point(185, 172);
+            this.metroLabel23.Name = "metroLabel23";
+            this.metroLabel23.Size = new System.Drawing.Size(57, 19);
+            this.metroLabel23.TabIndex = 10;
+            this.metroLabel23.Text = "Justin To";
+            // 
+            // metroLabel22
+            // 
+            this.metroLabel22.AutoSize = true;
+            this.metroLabel22.BackColor = System.Drawing.Color.Magenta;
+            this.metroLabel22.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.metroLabel22.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.metroLabel22.ForeColor = System.Drawing.Color.Magenta;
+            this.metroLabel22.Location = new System.Drawing.Point(151, 166);
+            this.metroLabel22.Name = "metroLabel22";
+            this.metroLabel22.Size = new System.Drawing.Size(19, 25);
+            this.metroLabel22.Style = MetroFramework.MetroColorStyle.Magenta;
+            this.metroLabel22.TabIndex = 9;
+            this.metroLabel22.Text = "-";
+            // 
+            // metroLabel21
+            // 
+            this.metroLabel21.AutoSize = true;
+            this.metroLabel21.Location = new System.Drawing.Point(4, 172);
+            this.metroLabel21.Name = "metroLabel21";
+            this.metroLabel21.Size = new System.Drawing.Size(132, 19);
+            this.metroLabel21.TabIndex = 8;
+            this.metroLabel21.Text = "Hardware Assitstance";
+            // 
+            // metroLabel20
+            // 
+            this.metroLabel20.AutoSize = true;
+            this.metroLabel20.Location = new System.Drawing.Point(185, 138);
+            this.metroLabel20.Name = "metroLabel20";
+            this.metroLabel20.Size = new System.Drawing.Size(141, 19);
+            this.metroLabel20.TabIndex = 7;
+            this.metroLabel20.Text = "John Hall, James Milne";
+            // 
+            // metroLabel19
+            // 
+            this.metroLabel19.AutoSize = true;
+            this.metroLabel19.BackColor = System.Drawing.Color.Magenta;
+            this.metroLabel19.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.metroLabel19.FontWeight = MetroFramework.MetroLabelWeight.Bold;
+            this.metroLabel19.ForeColor = System.Drawing.Color.Magenta;
+            this.metroLabel19.Location = new System.Drawing.Point(151, 132);
+            this.metroLabel19.Name = "metroLabel19";
+            this.metroLabel19.Size = new System.Drawing.Size(19, 25);
+            this.metroLabel19.Style = MetroFramework.MetroColorStyle.Magenta;
+            this.metroLabel19.TabIndex = 6;
+            this.metroLabel19.Text = "-";
+            // 
+            // metroLabel18
+            // 
+            this.metroLabel18.AutoSize = true;
+            this.metroLabel18.Location = new System.Drawing.Point(4, 138);
+            this.metroLabel18.Name = "metroLabel18";
+            this.metroLabel18.Size = new System.Drawing.Size(74, 19);
+            this.metroLabel18.TabIndex = 5;
+            this.metroLabel18.Text = "Developers";
+            // 
+            // metroLabel17
+            // 
+            this.metroLabel17.AutoSize = true;
+            this.metroLabel17.FontSize = MetroFramework.MetroLabelSize.Tall;
+            this.metroLabel17.Location = new System.Drawing.Point(4, 96);
+            this.metroLabel17.Name = "metroLabel17";
+            this.metroLabel17.Size = new System.Drawing.Size(64, 25);
+            this.metroLabel17.TabIndex = 4;
+            this.metroLabel17.Text = "Credits";
+            // 
+            // metroTile1
+            // 
+            this.metroTile1.ActiveControl = null;
+            this.metroTile1.ForeColor = System.Drawing.Color.Magenta;
+            this.metroTile1.Location = new System.Drawing.Point(3, 86);
+            this.metroTile1.Name = "metroTile1";
+            this.metroTile1.Size = new System.Drawing.Size(512, 3);
+            this.metroTile1.Style = MetroFramework.MetroColorStyle.Magenta;
+            this.metroTile1.TabIndex = 3;
+            this.metroTile1.Text = "metroTile1";
+            this.metroTile1.UseSelectable = true;
+            // 
+            // metroLabel16
+            // 
+            this.metroLabel16.AutoSize = true;
+            this.metroLabel16.Location = new System.Drawing.Point(-4, 20);
+            this.metroLabel16.Name = "metroLabel16";
+            this.metroLabel16.Size = new System.Drawing.Size(330, 38);
+            this.metroLabel16.TabIndex = 2;
+            this.metroLabel16.Text = "Piano Hero is a self-teaching piano program designed \r\nand developed for a third " +
+    "year capstone project";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(20, 14);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(201, 50);
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
             // 
             // PianoHero
             // 
@@ -683,17 +908,26 @@
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BackImage = global::PianoHeroDesktopApp.Properties.Resources.piano;
             this.ClientSize = new System.Drawing.Size(807, 453);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.metroTabControl1);
             this.Name = "PianoHero";
+            this.Resizable = false;
             this.Style = MetroFramework.MetroColorStyle.Magenta;
-            this.Text = "Piano Hero";
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PianoHero_KeyPress);
             this.metroTabControl1.ResumeLayout(false);
             this.KeyboardTab.ResumeLayout(false);
             this.KeyboardTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.slowerPB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.fasterButton)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pausePlayPB)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.midiCreationTab.ResumeLayout(false);
             this.midiCreationTab.PerformLayout();
             this.SettingsTab.ResumeLayout(false);
             this.SettingsTab.PerformLayout();
+            this.About.ResumeLayout(false);
+            this.About.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -736,12 +970,29 @@
         private MetroFramework.Controls.MetroLabel metroLabel11;
         private MetroFramework.Controls.MetroLabel fileSendStatus;
         private MetroFramework.Controls.MetroProgressBar fileSendProgress;
-        private MetroFramework.Controls.MetroButton play;
         private MetroFramework.Controls.MetroLabel metroLabel15;
         private MetroFramework.Controls.MetroLabel keyTxt;
         private MetroFramework.Controls.MetroLabel speedTxt;
         private MetroFramework.Controls.MetroLabel volTxt;
-        private System.Windows.Forms.TabPage aboutTab;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pausePlayPB;
+        private System.Windows.Forms.PictureBox fasterButton;
+        private MetroFramework.Controls.MetroProgressBar songProgress;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private MetroFramework.Controls.MetroTabPage About;
+        private MetroFramework.Controls.MetroLabel metroLabel26;
+        private MetroFramework.Controls.MetroLabel metroLabel25;
+        private MetroFramework.Controls.MetroLabel metroLabel24;
+        private MetroFramework.Controls.MetroLabel metroLabel23;
+        private MetroFramework.Controls.MetroLabel metroLabel22;
+        private MetroFramework.Controls.MetroLabel metroLabel21;
+        private MetroFramework.Controls.MetroLabel metroLabel20;
+        private MetroFramework.Controls.MetroLabel metroLabel19;
+        private MetroFramework.Controls.MetroLabel metroLabel18;
+        private MetroFramework.Controls.MetroLabel metroLabel17;
+        private MetroFramework.Controls.MetroTile metroTile1;
+        private MetroFramework.Controls.MetroLabel metroLabel16;
+        private System.Windows.Forms.PictureBox slowerPB;
     }
 }
 

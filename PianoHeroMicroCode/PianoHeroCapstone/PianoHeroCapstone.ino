@@ -46,6 +46,23 @@ void setup(void) {
 void loop() {
   // put your main code here, to run repeatedly:
   int ret = 1;
+  char incomingBytes[] = "";
+
+  //Detect if play button was pressed in app
+    if(Serial1.available()>0)
+    {
+      incomingBytes = Serial1.read();
+
+      if(strstr(incomingBytes,"PLAY") != NULL)
+      {
+        PlayMachineState();
+      }
+	   if(strstr(incomingBytes,"STOP") != NULL)
+      {
+        LoadStateMachine();
+      }
+    }
+  
   if((state > MIN_MIDI_STATE && state < MAX_MIDI_STATE))
   {    
     PlayMachineState();
@@ -60,6 +77,9 @@ void loop() {
   {    
     DetectButtonPress(PLAY_BUTTON_PIN, &OnPlay, (void*)&SD);    
     DetectButtonPress(LOAD_BUTTON_PIN, &OnLoadFile, (void*)&SD);
+
+    
+    
   }
 
   if(ret == 0)
