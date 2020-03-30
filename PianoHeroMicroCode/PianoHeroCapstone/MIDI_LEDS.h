@@ -1,8 +1,8 @@
 //################### MIDI START
 
 #include <MD_MIDIFile.h>
-
-
+#include "RingBuffer.h"
+#include "LED_VIA_KEYBOARD.h"
 #define GENERATE_TICKS  1
 
 #define USE_MIDI  1   // set to 1 to enable MIDI output, otherwise debug output
@@ -34,18 +34,6 @@ MD_MIDIFile SMF;
 
 #define SERIAL_RATE 115200
 
-//################### LED STRIP START
-#include "FastLED.h"
- 
-#define NUM_LEDS 32
- 
-#define DATA_PIN 15
-#define CLOCK_PIN 16
- 
-CRGB leds[NUM_LEDS];
-int order[NUM_LEDS] = {0,30,1};
-
-//################### LED STRIP END
 
 
 void midiCallback(midi_event *pev)
@@ -56,26 +44,16 @@ void midiCallback(midi_event *pev)
 //Serial.write("IN CALL BACK!!!!!!!!!!!!!!!!!!\n");
   if ((pev->data[0] >= 0x80) && (pev->data[0] <= 0xe0))
   {
-   // Serial.write("IN CALL BACK!!!!!!!!!!!!!!!!!!\n");
-    //Serial.write(pev->data[0] | pev->channel);
-   // char s[40] = {0};
-  //  sprintf(s,"|%08d|%08d|%08d|%08d|\n", pev->data[0], pev->data[1], pev->data[2], pev->data[3]);
+  //  char s[40] = {0};
+   // sprintf(s,"|%08d|%08d|%08d|%08d|\n", pev->data[0], pev->data[1], pev->data[2], pev->data[3]);
    // Serial.write(s);
+      
+    RunMidiLeds(pev->data[1], pev->data[2]);
 
-    int color = pev->data[2] * 2;
-    if(color == 0x100)
-    {
-      color-=1;
-    }
-    
-    byte led = (pev->data[1]-36) % NUM_LEDS;
-    leds[led] = CHSV(color, color, color);
-    FastLED.show();
-   // Serial.write(&pev->data[1], pev->size-1);
   }
   else{
-   Serial.write("\nIN ELSE CALL BACK!!!!!!!!!!!!!!!!!!\n");
-   Serial.write(pev->data, pev->size);
+   //Serial.write("\nIN ELSE CALL BACK!!!!!!!!!!!!!!!!!!\n");
+   //Serial.write(pev->data, pev->size);
   }
 
 }
@@ -91,9 +69,11 @@ void MidiSilence(void)
   // envelopes are set to zero as soon as possible.
   ev.size = 0;
   ev.data[ev.size++] = 0xb0;
-  ev.data[ev.size++] = 120;
   ev.data[ev.size++] = 0;
-
+  ev.data[ev.size++] = 0;
+ 
+   AllOff();
+  
   for (ev.channel = 0; ev.channel < 16; ev.channel++)
     midiCallback(&ev);
 }
@@ -122,7 +102,8 @@ uint16_t GetPotInput(void)
   }
   else
   {
-    BPM = (uint16_t)(0.5 * ogTempo);
+    BPM = (uint16_t)(0.1 * ogTempo);
+    //BPM = (uint16_t)(0.5 * ogTempo);
   }
   //printMsg("BPM: %u\n", BPM);
   return BPM;
@@ -166,7 +147,8 @@ void MidiLEDsSetup(SdFat*  SD)
   SMF.begin(SD);
   SMF.setMidiHandler(midiCallback);
   //SMF.setSysexHandler(sysexCallback);
-  FastLED.addLeds<WS2801, DATA_PIN, CLOCK_PIN, RGB>(leds, NUM_LEDS);
+  InitKeyLeds();
+  
 }
 
   static bool fBeat = false;
@@ -181,29 +163,16 @@ void PlayMachineState(void)
   switch (state)
   {
   case STATE_PROMPT:
-    Serial.print("\nEnter file name: ");
+    //Serial.print("\nEnter file name: ");
     state = S_IDLE;
     break;
 
   case S_IDLE:    // now idle, set up the next tune
-    {
-      uint8_t len = 0;
-      char c; 
-      char  fname[20];
-      // read until end of line
-      do
-      {
-        while (!Serial.available())
-          ;  // wait for the next character
-        c = Serial.read();
-        fname[len++] = c;
-      } while (c != '\n');
-
-      // properly terminate
-      --len;
-      fname[len++] = '\0';
-
-      Serial.println(fname);
+    {            
+      char fname[20] = {0};
+    
+      strcpy(fname, "a.midi");    
+     
       SMF.setFilename(fname);
       state = STATE_OPEN;
     }
@@ -214,27 +183,29 @@ void PlayMachineState(void)
     if (err != -1)
     {
       Serial.print("SMF load Error ");
-      Serial.println(err);
+     // Serial.println(err);
       state = STATE_PROMPT;
     }
     else
     {
+      
       //SMF.dump();
       ogTempo =  SMF.getTempo();
-      printMsg("BPM: %u",ogTempo);
+     
       state = S_PLAYING;
-      
-      printMsg("Starting Play",1);
+      MidiSilence();
+      sumTicks = 0;
+      fBeat = false;
+     // printMsg("Starting Play",1);
     }
     break;
 
-  case S_PLAYING: // play the file
-   // DEBUGS("\nS_PLAYING");
-   // if (!SMF.isEOF())
+  case S_PLAYING: // play the file  
     {
-              // play the file
-    //  #if GENERATE_TICKS
-
+            
+        RunKeyLeds();
+   
+        
         uint32_t ticks = tickClock();
         //
         if (ticks > 0)
@@ -242,7 +213,7 @@ void PlayMachineState(void)
         //  printMsg("In IF!!!!!!! ticks: %lu\n", ticks);
           //LCDBeat(fBeat);
           //if (SMF.getNextEvent()){}
-          SMF.processEvents(ticks);  
+    SMF.processEvents(ticks);  
           //SMF.isEOF();
         //  SMF.isEOF();  // side effect to cause restart at EOF if looping
         //  LCDbpm();
@@ -250,7 +221,7 @@ void PlayMachineState(void)
           sumTicks += ticks;
           if (sumTicks >= SMF.getTicksPerQuarterNote())
           {
-           //  printMsg("SUM of ticks: %lu\n", sumTicks);
+           
             sumTicks = 0;
             fBeat = !fBeat;
           }    
@@ -259,26 +230,27 @@ void PlayMachineState(void)
         {
          // printMsg("ticks: %lu\n", ticks); 
         }
-    //  #else
-    //    SMF.getNextEvent();
-    //  #endif
+      if(SMF.isEOF())// else
+      {
+      //  Serial.println("end of file\n");
+       // printMsg("Ending Play",1);
+        state = S_END;
+      }
       
     }
-    if(SMF.isEOF())// else
-    {
-      printMsg("Ending Play",1);
-      state = S_END;
-    }
+
     break;
 
   case S_END:   // done with this one
-  //  DEBUGS("\nS_END");
+    // printMsg("\nS_END",1);
+   // Serial.println("before midi silence\n");
     MidiSilence();
     SMF.close();
 
     timeStart = millis();
-    state = S_WAIT_BETWEEN;
-   // DEBUGS("\nWAIT_BETWEEN");
+    state = DONE_STATE;//S_WAIT_BETWEEN;
+   // Serial.println("Done song\n");
+    //printMsg("\nDone",1);
     break;
 
   case S_WAIT_BETWEEN:    // signal finish LED with a dignified pause
@@ -291,4 +263,6 @@ void PlayMachineState(void)
     state = S_IDLE;
     break;
   }
+  //Serial.write("led print\n");
+  ShowAll();
 }

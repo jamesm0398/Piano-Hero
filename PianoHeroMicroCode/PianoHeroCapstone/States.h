@@ -10,7 +10,7 @@ STATES state;
 #define LOAD_BUTTON_PIN 8
 #define  SD_SELECT  10
 
-#define DEBUG_MSG 1
+#define DEBUG_MSG 0
 void printMsg(const char* format, int arg ...);
 void printMsg(const char* format, int arg ...)
 {
