@@ -14,6 +14,7 @@ using System.IO;
 using System.Threading;
 using System.Net.Sockets;
 
+
 //Program: PianoHeroDesktopApp
 //Description: This tab control driven application enables the user to convert their own wav files to midi which will allow them to 
 //             play/learn the song on a keyboard.
@@ -33,6 +34,7 @@ namespace PianoHeroDesktopApp
         string ctrlIpAddr = "192.168.0.100";//"127.0.0.1";//
         private const int BufferSize = 54;
         string state = "Stopped";
+        const int WavFileSizeLimit = 50000;
 
         System.Windows.Forms.Timer animationTimer = new System.Windows.Forms.Timer
         {
@@ -41,24 +43,16 @@ namespace PianoHeroDesktopApp
 
         void timer_Tick(object sender, EventArgs e)
         {
-            int x = pausePlayPB.Location.X;
-            int y = pausePlayPB.Location.Y;
 
-            int fX = fasterButton.Location.X;
-            int fY = fasterButton.Location.Y;
-
-            int sX = slowerPB.Location.X;
-            int sY = slowerPB.Location.Y;
+            int fadingSpeed = 5;
+            currentSong.ForeColor = Color.FromArgb(currentSong.ForeColor.R - fadingSpeed, currentSong.ForeColor.G - fadingSpeed, currentSong.ForeColor.B - fadingSpeed);
+            nowPlaying.ForeColor = Color.FromArgb(nowPlaying.ForeColor.R - fadingSpeed, nowPlaying.ForeColor.G - fadingSpeed, nowPlaying.ForeColor.B - fadingSpeed);
 
 
-            pausePlayPB.Location = new Point(x, y-25);
-            fasterButton.Location = new Point(fX, fY - 25);
-            slowerPB.Location = new Point(sX, sY - 25);
-
-            if (y < 280 && fY < 280 && sY < 280)
+            if (currentSong.ForeColor.R < 5)
+            {
                 animationTimer.Stop();
-
-            
+            }
 
         }
 
@@ -71,6 +65,8 @@ namespace PianoHeroDesktopApp
            
             animationTimer.Tick += new EventHandler(timer_Tick);
 
+            currentSong.ForeColor = Color.FromArgb(255, 255, 255);
+            nowPlaying.ForeColor = Color.FromArgb(255, 255, 255);
           
             int defaultVolume = Convert.ToInt32(defaultVolumeStr);
             int defaultPlaySpeed = Convert.ToInt32(defaultPlaySpeedStr);
@@ -80,31 +76,8 @@ namespace PianoHeroDesktopApp
             defaultSpeed.Value = defaultPlaySpeed;
             defaultVol.Value = defaultVolume;
 
-            //Listen for microcontrollers to be connected
-
-            //*****TCP - currently using UDP - SEE ListenUDP method*****//
-
-
-
-            //string portNumStr = ConfigurationManager.AppSettings["Port"];
-            //int portNum = Int32.Parse(portNumStr);
-
-            //Thread t = new Thread(delegate ()
-            //{
-            //    IPHostEntry host = Dns.GetHostEntry("localhost");
-            //    IPAddress ipAddress = host.AddressList[0];
-
-            //    Server server = new Server(ipAddress.ToString(), portNum);
-
-
-            //});
-
-            //t.Start();
-
           
-
-
-
+            
 
         }
 
@@ -160,7 +133,25 @@ namespace PianoHeroDesktopApp
         {
             //1. Retreive filename of wav file to upload
 
+            if(wavFile == "")
+            {
+                MessageBox.Show("No wav file selected, please select one");
+                return;
+            }
+
             string shortnedFileName = Path.GetFileName(wavFile);
+            FileInfo fi = new FileInfo(wavFile);
+            if (fi.Length == 0)
+            {
+                MessageBox.Show("WAV File is empty, cannot convert");
+                return;
+            }
+            long fileSizeMB = (fi.Length / 1024);
+            if(fileSizeMB > WavFileSizeLimit)
+            {
+                MessageBox.Show("WAV File is too large to convert, sorry");
+                return;
+            }
 
             string uriString = @"http://127.0.0.1:8000/wav2midi/";//@"http://mockwav2midi.herokuapp.com/wav2midi/";
             WebClient cloudService = new WebClient();
@@ -222,8 +213,15 @@ namespace PianoHeroDesktopApp
         //Summary: This method sends a midi file to the microcontroller 
         //Params: sender, e
         //Returns: none
-        private void playButton_Click(object sender, EventArgs e)
+        private void loadButton_Click(object sender, EventArgs e)
         {
+
+            if(midiFile == "")
+            {
+                MessageBox.Show("No midi file selected, please select one");
+                return;
+            }
+
             fileSendProgress.Visible = true;
             fileSendStatus.Text = "Sending file to microcontroller, please wait...";
 
@@ -362,6 +360,8 @@ namespace PianoHeroDesktopApp
             {
                 wavFile = fdlg.FileName;
                 selectedFileText.Text = wavFile;
+
+               
             }
 
         }
@@ -399,74 +399,54 @@ namespace PianoHeroDesktopApp
         {
             OpenFileDialog fdlg = new OpenFileDialog(); fdlg.Title = "Select MIDI file";
             fdlg.InitialDirectory = @"D:\";
-            //fdlg.Filter = "Text Files|*.txt|MiDI|*.midi";
+            fdlg.Filter = "MIDI Files|*.midi";
             fdlg.RestoreDirectory = true;
 
             if (fdlg.ShowDialog() == DialogResult.OK)
             {
                 midiFile = fdlg.FileName;
+                string shortFile = Path.GetFileName(midiFile);
                 selectedSong.Text = midiFile;
+                currentSong.Text = shortFile;
             }
         }
 
         //Icon made by https://www.flaticon.com/authors/those-icons"
-        //Send a packet to the microcontroller to begin playing the song on the microcontroller
+        //Indicates that a song is now being played
         private void play_Click(object sender, EventArgs e)
         {
-
-            pausePlayPB.Show();
-            fasterButton.Show();
+            if(midiFile == "")
+            {
+                MessageBox.Show("Please select a midi file before playing");
+                return;
+            }
+      
             animationTimer.Start();
 
             state = "Playing";
 
+            FileInfo fileInfo = new FileInfo(midiFile);
+
+            songProgress.Maximum = Convert.ToInt32(fileInfo.Length);
+            songProgress.Minimum = 1;
+         
+            
             songProgress.Show();
 
-            //Network setup
-            string portNumStr = ConfigurationManager.AppSettings["Port"];
-            int portNum = Int32.Parse(portNumStr);
-            byte[] SendingBuffer = null;
-            TcpClient client = null;
-
-
-            NetworkStream netstream = null;
-
-            try
+            //Start feedback application
+            using (System.Diagnostics.Process pProcess = new System.Diagnostics.Process())
             {
-                if (SendHeader(client, portNum, 32) == 0)
-                {
-                    // microcontroller reported an error
-                    return;
-                }
-
-                SendingBuffer = new byte[32];
-                client = new TcpClient(ctrlIpAddr, portNum);
-                client.Client.SendBufferSize = SendingBuffer.Length;
-                SendingBuffer = Encoding.ASCII.GetBytes("PLAY");
-                client.Client.Send(SendingBuffer, SendingBuffer.Length, SocketFlags.None);
-                byte[] recv = new byte[4] { 0, 0, 0, 0 };
-                client.Client.ReceiveTimeout = 150;
-                client.Client.Receive(recv, 0, recv.Length, SocketFlags.None);
-                client.Client.Close();
+                pProcess.StartInfo.FileName = @"Usb2Serial\Cserial\Debug\Cserial.exe"; //path to feedback application exe
+                pProcess.StartInfo.Arguments = "4"; //argument
+                pProcess.StartInfo.UseShellExecute = false;
+                pProcess.StartInfo.RedirectStandardOutput = true;
+                pProcess.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+               
+                pProcess.Start();
+               
             }
 
-            catch (Exception ex)
-            {
-                fileSendStatus.Text = "Play error: " + ex.ToString();
-            }
-
-            finally
-            {
-                if (netstream != null)
-                {
-                    netstream.Close();
-                }
-                if (client != null)
-                {
-                    client.Client.Close();
-                }
-
-            }
+            
 
         }
 
@@ -503,7 +483,7 @@ namespace PianoHeroDesktopApp
             ConfigurationManager.RefreshSection("appSettings");
 
             string keyTest = ConfigurationManager.AppSettings["PlayPauseButton"];
-            keyTxt.Text = keyTest;
+           
 
 
         }
@@ -677,22 +657,7 @@ namespace PianoHeroDesktopApp
             volTxt.Text = volTest;
         }
 
-        //Pause/play button whilst song is playing
-        private void pausePlayPB_Click(object sender, EventArgs e)
-        {
-            if (state == "Playing")
-            {
-
-                this.pausePlayPB.Image = Image.FromFile(Application.StartupPath + "\\" + "play-button-black.png");
-                state = "Stopped";
-            }
-
-            else
-            {
-                this.pausePlayPB.Image = Image.FromFile(Application.StartupPath + "\\" + "pause.png");
-                state = "Playing";
-            }
-        }
+       
 
         public void SendToController(string text)
         {
@@ -751,9 +716,7 @@ namespace PianoHeroDesktopApp
 
             if (state == "Playing")
             {
-               
-
-                if(pausePlayChar == e.KeyChar)
+                              if(pausePlayChar == e.KeyChar)
                 {
                     SendToController("PAUSE");
 
@@ -770,6 +733,11 @@ namespace PianoHeroDesktopApp
 
                 }
             }
+        }
+
+        private void songProgress_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

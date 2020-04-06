@@ -4,36 +4,9 @@
 #include "UsbEnum.h"
 #include <thread>
 #include <future>
-static void print_devs(libusb_device **devs)
-{
-	/*libusb_device *dev;
-	int i = 0, j = 0;
-	uint8_t path[8];
-	printf("------------------------------------------------\n");
-	while ((dev = devs[i++]) != NULL) {
-		struct libusb_device_descriptor desc;
-		int r = libusb_get_device_descriptor(dev, &desc);
-		if (r < 0) {
-			fprintf(stderr, "failed to get device descriptor");
-			return;
-		}
-		
-		printf("%d VId %04x:PId %04x (bus num %d, device addr %d) class: %04x, subClass: %04x",
-			i, desc.idVendor, desc.idProduct,
-			libusb_get_bus_number(dev), libusb_get_device_address(dev), desc.bDeviceClass, desc.bDeviceSubClass);
-		
 
-		r = libusb_get_port_numbers(dev, path, sizeof(path));
-		if (r > 0) {
-			printf(" path: %d", path[0]);
-			for (j = 1; j < r; j++)
-				printf(".%d", path[j]);
-		}
-		printf("\n");
-	}*/
-}
 
-int main(void)
+int main(int argc, char* argv[])
 {
 	int done = 0;
 	MIDIHDR hdr;
@@ -42,7 +15,7 @@ int main(void)
 	while (!done)
 	{
 		printf("exit : 0, ComPort : 1, Usb : 2, Midi : 3, Midi 2 Com : 4\n");
-		int in = getNum();
+		int in = atoi(argv[1]);
 		switch (in)
 		{
 		case 0:
@@ -54,7 +27,7 @@ int main(void)
 			CloseComPort(&hSerial);
 			break;
 		case 2:
-			UsbListAndInteract();
+			//UsbListAndInteract();
 			break;
 		case 3:
 			findMidiInput(&hdr, &midiHandle);
