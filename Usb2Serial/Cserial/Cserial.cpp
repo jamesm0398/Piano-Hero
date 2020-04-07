@@ -35,8 +35,11 @@
 		printf("\n");
 	}
 }
-*/
+
 int main(void)
+*/
+
+int main(int argc, char* argv[])
 {
 	int done = 0;
 	MIDIHDR hdr;
@@ -45,7 +48,7 @@ int main(void)
 	while (!done)
 	{
 		printf("exit : 0, ComPort : 1, Usb : 2, Midi : 3, Midi 2 Com : 4\n");
-		int in = getNum();
+		int in = atoi(argv[1]);
 		switch (in)
 		{
 		case 0:
