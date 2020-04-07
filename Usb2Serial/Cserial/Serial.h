@@ -27,7 +27,7 @@ HANDLE OpenSerialCon(LPCWSTR comPort)
 	return hComm;
 }
 
-static int ComPort(HANDLE* hSerial)
+static int ComPort(HANDLE* hSerial, int portNum)
 {
 
 
@@ -35,8 +35,7 @@ static int ComPort(HANDLE* hSerial)
 	//HANDLE hSerial;
 	DCB dcbSerialParams = { 0 };
 	COMMTIMEOUTS timeouts = { 0 };
-	printf("Enter port number: ");
-	int portNum = getNum();
+	
 	std::string portName = "\\\\.\\COM";
 	portName.append(std::to_string(portNum));
 	// Open the highest available serial port number
@@ -269,7 +268,7 @@ static void AsyncWriteComPort(HANDLE* hSerial, int* num, int* exitCond)
 	while (*num != *exitCond)
 	{
 		fgets(record, 128, stdin);
-		WriteComPort(hSerial, record, strlen(record) * sizeof(char));
+//		WriteComPort(hSerial, record, strlen(record) * sizeof(char));
 	}
 
 }
@@ -302,6 +301,7 @@ static int CloseComPort(HANDLE* hSerial)
 		return 1;
 	}
 	fprintf(stderr, "OK\n");
+	return 0;
 }
 
 //static int ComPortRead()

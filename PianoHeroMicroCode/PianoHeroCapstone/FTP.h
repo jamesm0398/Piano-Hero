@@ -10,7 +10,7 @@
 long totalBodyLen = 0;
 long bodySectionLen = 0;
 
-byte buff[BUFF_LEN+HEADER_LEN+1] = {0};
+char buff[BUFF_LEN+HEADER_LEN+600] = {0};
 
 
 File FTPFile;
@@ -27,7 +27,7 @@ int LoadStateMachine(int* state_ptr);
 SdFat* FTP_SD;
 void LoadSetup(SdFat* sd)
 {
-  Serial1.begin(115200);
+  Serial1.begin(921600);
   delay(150);
   while(Serial1.available()){
     Serial1.read();
@@ -83,6 +83,7 @@ int ReadXBytesBlock(long len,  int state ,long* headerLen)
       {
         FTPFile.write(*tmp);
         Serial.write(*tmp);
+        (*tmp) = 0;
         ++tmp;
         ++j;
       }
@@ -159,7 +160,7 @@ int LoadStateMachine()
    {
       case MASTER_HEADER_STATE:
       {
-       //  printMsg("In Master header state: %d\n", 1); 
+         printMsg("In Master header state: %d\n", 1); 
         if(0 == ReadXBytesBlock(HEADER_LEN,  MASTER_HEADER_STATE , &totalBodyLen))
         {
           result = 0;
@@ -174,6 +175,7 @@ int LoadStateMachine()
       }    
       case CONTENT_HEADER_STATE:
       {
+        printMsg("In Content header state: %d\n", 1); 
         if(0 == ReadXBytesBlock(HEADER_LEN,  CONTENT_HEADER_STATE, &bodySectionLen))
         {
           result = 0;
@@ -208,6 +210,7 @@ int LoadStateMachine()
       case INVALID_STATE:
       {
         Serial.write("Reset state\n");
+        FTPFile.close();
         result = 0;
         break;
       }

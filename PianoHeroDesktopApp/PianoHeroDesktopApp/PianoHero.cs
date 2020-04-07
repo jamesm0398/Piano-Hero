@@ -31,7 +31,7 @@ namespace PianoHeroDesktopApp
         string defaultPlaySpeedStr = ConfigurationManager.AppSettings["Speed"];
         string wavFile = "";
         string midiFile = "";
-        string ctrlIpAddr = "192.168.0.100";//"127.0.0.1";//
+        string ctrlIpAddr = "192.168.137.131";//"192.168.0.100";//"127.0.0.1";//
         private const int BufferSize = 54;
         string state = "Stopped";
         const int WavFileSizeLimit = 50000;
@@ -44,7 +44,7 @@ namespace PianoHeroDesktopApp
         void timer_Tick(object sender, EventArgs e)
         {
 
-            int fadingSpeed = 5;
+            int fadingSpeed = 0;
             currentSong.ForeColor = Color.FromArgb(currentSong.ForeColor.R - fadingSpeed, currentSong.ForeColor.G - fadingSpeed, currentSong.ForeColor.B - fadingSpeed);
             nowPlaying.ForeColor = Color.FromArgb(nowPlaying.ForeColor.R - fadingSpeed, nowPlaying.ForeColor.G - fadingSpeed, nowPlaying.ForeColor.B - fadingSpeed);
 
@@ -436,13 +436,21 @@ namespace PianoHeroDesktopApp
             //Start feedback application
             using (System.Diagnostics.Process pProcess = new System.Diagnostics.Process())
             {
-                pProcess.StartInfo.FileName = @"Usb2Serial\Cserial\Debug\Cserial.exe"; //path to feedback application exe
-                pProcess.StartInfo.Arguments = "4"; //argument
+                pProcess.StartInfo.FileName = @"..\..\..\..\Usb2Serial\x64\x64\Cserial.exe"; //path to feedback application exe
+                pProcess.StartInfo.Arguments = "4 8"; //argument option 4, comport 8
                 pProcess.StartInfo.UseShellExecute = false;
-                pProcess.StartInfo.RedirectStandardOutput = true;
-                pProcess.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-               
-                pProcess.Start();
+                //pProcess.StartInfo.RedirectStandardOutput = true;
+                //pProcess.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+
+                try
+                {
+                    pProcess.Start();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Could not start Cserial.exe. "+ ex.Message);                    
+                }
+                
                
             }
 

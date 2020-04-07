@@ -10,12 +10,12 @@ STATES state;
 #define LOAD_BUTTON_PIN 8
 #define  SD_SELECT  10
 
-#define DEBUG_MSG 0
+#define DEBUG_MSG 1
 void printMsg(const char* format, int arg ...);
 void printMsg(const char* format, int arg ...)
 {
  #if DEBUG_MSG == 1
-    char s[500];
+    char s[500] = {0};
     sprintf(s, format, arg);
     Serial.write( s );
  #endif

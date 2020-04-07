@@ -113,7 +113,7 @@ static int getNum()
 
 static int hexadecimalToDecimal(char hexVal[])
 {
-	int len = strlen(hexVal);
+	size_t len = strlen(hexVal);
 
 	// Initializing base value to 1, i.e 16^0 
 	int base = 1;
@@ -121,7 +121,7 @@ static int hexadecimalToDecimal(char hexVal[])
 	int dec_val = 0;
 
 	// Extracting characters as digits from last character 
-	for (int i = len - 1; i >= 0; i--)
+	for (size_t i = len - 1; i >= 0; i--)
 	{
 		// if character lies in '0'-'9', converting  
 		// it to integral 0-9 by subtracting 48 from 

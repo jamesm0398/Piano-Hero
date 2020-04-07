@@ -185,6 +185,7 @@ int PlayMachineState(void)
     if (err != -1)
     {
       Serial.print("SMF load Error ");
+      printMsg("\n!!!!!!!!!\n SMF error %d \n!!!!!!!!!\n",err);
      // Serial.println(err);
       state = STATE_PROMPT;
       ret = 0;

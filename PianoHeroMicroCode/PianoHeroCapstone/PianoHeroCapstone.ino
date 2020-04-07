@@ -3,6 +3,20 @@
 #include "MIDI_LEDS.h"
 
 //#include "LED_VIA_KEYBOARD.h"
+SdFat SD;
+bool SetupSDCard(SdFat* SD)
+{
+  bool sdIsGood = false;
+  if (!SD->begin(10)) {
+    Serial.println("SD fail");  
+  }
+  else{
+    Serial.println("SD Good");
+    sdIsGood = true;  
+  }
+  return sdIsGood;
+}
+
 void OnLoadFile (void* arg)
 {
        //clear tcp buffer    
@@ -10,9 +24,13 @@ void OnLoadFile (void* arg)
     {
       Serial1.read();
     }  
-    LoadSetup((SdFat*)arg);
-   // Serial.write( "SELECTED LOAD\n" );
-    state = MASTER_HEADER_STATE;
+    SdFat* sdCard = (SdFat*)arg;
+    if(SetupSDCard(sdCard))
+    {
+      LoadSetup(sdCard);
+     // Serial.write( "SELECTED LOAD\n" );
+      state = MASTER_HEADER_STATE;
+    }
 }
 void OnPlay(void* arg)
 {
@@ -21,23 +39,23 @@ void OnPlay(void* arg)
     {
       Serial.read();
     }  
+    SdFat* sdCard = (SdFat*)arg;
+    if(SetupSDCard(sdCard))
+    {
       state = STATE_PROMPT;
       MidiLEDsSetup((SdFat*)arg);
      // Serial.write( "SELECTED PLAY\n" );
+    }
 }
 
 
-SdFat SD;
+
 void setup(void) {
   delay(150);
     // Setup computer to Teensy serial
   Serial.begin(115200);
   // put your setup code here, to run once:
-  if (!SD.begin(10)) {
-    Serial.println("SD fail");
-    return;
-  }
-  Serial.println("SD Good");
+
  
   
     //init button pins as inputs 
@@ -87,10 +105,10 @@ void loop() {
 
     
   if(state == DONE_STATE)
-  {        
-
+  {      
+    
     DetectButtonPress(PLAY_BUTTON_PIN, &OnPlay, (void*)&SD);    
-    DetectButtonPress(LOAD_BUTTON_PIN, &OnLoadFile, (void*)&SD);
+    DetectButtonPress(LOAD_BUTTON_PIN, &OnLoadFile, (void*)&SD);    
   }
 
   if(ret == 0)

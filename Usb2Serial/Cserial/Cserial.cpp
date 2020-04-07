@@ -5,7 +5,7 @@
 #include <thread>
 #include <future>
 
-#define DEBUG 1
+#define DEBUG 0
 
 /*static void print_devs(libusb_device **devs)
 {
@@ -45,17 +45,37 @@ int main(int argc, char* argv[])
 	MIDIHDR hdr;
 	HMIDIIN midiHandle;
 	HANDLE hSerial;
+	bool useStdin = false;
+
+	int func = -1;
+	int port = -1;
+
+	if (argc == 3)
+	{
+		func = atoi(argv[1]);
+		port = atoi(argv[2]);
+	}
+	else {
+		useStdin = true;
+	}
+	
+	
 	while (!done)
 	{
 		printf("exit : 0, ComPort : 1, Usb : 2, Midi : 3, Midi 2 Com : 4\n");
-		int in = atoi(argv[1]);
-		switch (in)
+		
+		if (useStdin)
+		{
+			func = getNum();
+		}
+
+		switch (func)
 		{
 		case 0:
 			done = 1;
 			break;
 		case 1:
-			ComPort(&hSerial);
+			ComPort(&hSerial, port);
 			WriteMidiComPort(&hSerial);
 			CloseComPort(&hSerial);
 			break;
@@ -74,7 +94,12 @@ int main(int argc, char* argv[])
 			break;
 		case 4:
 		{
-			ComPort(&hSerial);
+			if (useStdin)
+			{
+				printf("Enter port number: ");
+				port = getNum();
+			}
+			ComPort(&hSerial, port);
 			findMidiInput(&hdr,&midiHandle);
 #if DEBUG == 0
 			if (ConditionalRestComPort(&hSerial,"SD fail\r\n" ))
@@ -120,6 +145,11 @@ int main(int argc, char* argv[])
 			//rComT.join();
 			//wComT.join();
 			free(msg);
+
+			if (!useStdin)
+			{
+				done = true;
+			}
 			break;
 		}
 		default:
