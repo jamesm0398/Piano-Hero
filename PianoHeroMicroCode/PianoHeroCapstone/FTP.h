@@ -34,7 +34,7 @@ void LoadSetup(SdFat* sd)
   }  
   const char* fileName = "a.midi";
   sd->remove(fileName);
-  FTPFile = sd->open(fileName, O_WRITE | O_CREAT | O_TRUNC);//FILE_WRITE);////(O_RDWR | O_AT_END));
+  FTPFile = sd->open(fileName, O_WRITE | O_CREAT );//| O_TRUNC);//FILE_WRITE);////(O_RDWR | O_AT_END));
   if (!FTPFile)
   {
     Serial.println("File is not good.");
@@ -159,7 +159,7 @@ int LoadStateMachine()
    {
       case MASTER_HEADER_STATE:
       {
-        // printMsg("In Master header state: %d\n", 1); 
+       //  printMsg("In Master header state: %d\n", 1); 
         if(0 == ReadXBytesBlock(HEADER_LEN,  MASTER_HEADER_STATE , &totalBodyLen))
         {
           result = 0;

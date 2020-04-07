@@ -1,12 +1,15 @@
 #include "Serial.h"
 
 #include "MIDI.h"
-#include "UsbEnum.h"
+//#include "UsbEnum.h"
 #include <thread>
 #include <future>
-static void print_devs(libusb_device **devs)
+
+#define DEBUG 1
+
+/*static void print_devs(libusb_device **devs)
 {
-	/*libusb_device *dev;
+	libusb_device *dev;
 	int i = 0, j = 0;
 	uint8_t path[8];
 	printf("------------------------------------------------\n");
@@ -30,9 +33,9 @@ static void print_devs(libusb_device **devs)
 				printf(".%d", path[j]);
 		}
 		printf("\n");
-	}*/
+	}
 }
-
+*/
 int main(void)
 {
 	int done = 0;
@@ -54,7 +57,7 @@ int main(void)
 			CloseComPort(&hSerial);
 			break;
 		case 2:
-			UsbListAndInteract();
+			//UsbListAndInteract();
 			break;
 		case 3:
 			findMidiInput(&hdr, &midiHandle);
@@ -70,7 +73,7 @@ int main(void)
 		{
 			ComPort(&hSerial);
 			findMidiInput(&hdr,&midiHandle);
-			
+#if DEBUG == 0
 			if (ConditionalRestComPort(&hSerial,"SD fail\r\n" ))
 			{
 				CloseMidiInput(&hdr, &midiHandle);
@@ -78,6 +81,7 @@ int main(void)
 				printf("Rest comPort and MIdi\n");
 				break;
 			}
+#endif
 			int bufLen = 7000;
 			char* msg = (char*)calloc(bufLen, sizeof(char));
 			/*while (!ReadComPortChars(&hSerial, &msg, bufLen))
@@ -85,7 +89,7 @@ int main(void)
 			while (!ReadComPortChars(&hSerial, &msg, bufLen))
 			{
 			}*/
-			
+			ResetRingBuff();
 			
 			int exit = 0;
 			int exitCond = 1;

@@ -27,7 +27,7 @@ static void CALLBACK callback_func(HWAVEOUT hwo, UINT uMsg,
 	msg.vel = (dwParam1 >> 16) & 0xff;
 	WriteRingBuff(&msg);
 	
-	printf("Callback! msg=%d %d %d\n", msg.channel, msg.key, msg.vel);
+	//printf("Callback! msg=%d %d %d\n", msg.channel, msg.key, msg.vel);
 	cbmsg = uMsg;
 	cbval1 = dwParam1;   /* mhdr or 0 */
 	cbval2 = dwParam2;   /* always 0 */

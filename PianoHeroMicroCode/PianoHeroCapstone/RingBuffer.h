@@ -1,12 +1,11 @@
 typedef struct MidiMsg {
-  byte channel = 0;
   byte key = 0;
   byte vel = 0 ;
 }MidiMsg;
 
 #define MAX_RBUFF 84
 typedef struct RingBuffer {
-  MidiMsg buff[MAX_RBUFF];
+  MidiMsg buf[MAX_RBUFF];
   int stat[MAX_RBUFF];
   int nextWriteIndex;
   int nextReadIndex;
@@ -14,26 +13,55 @@ typedef struct RingBuffer {
 
 RingBuffer midiBuff = {0};
 RingBuffer keyBuff = {0};
-/*
-void WriteRingBuff(struct MidiMsg* msg)
+
+void ResetRingBuff()
 {
-  rBuff.buf[rBuff.nextWriteIndex] = *msg;
-  rBuff.stat[rBuff.nextWriteIndex++] = 1;
-  if (rBuff.nextWriteIndex >= MAX_RBUFF)
+  memset(&midiBuff, 0, sizeof(midiBuff));
+}
+
+/*
+
+ void WriteRingBuff(MidiMsg* msg)
+{
+  midiBuff.buf[midiBuff.nextWriteIndex] = *msg;
+  midiBuff.stat[midiBuff.nextWriteIndex++] = 1;
+ // printf("Writing to index %d\n", midiBuff.nextWriteIndex-1);
+  if (midiBuff.nextWriteIndex >= MAX_RBUFF)
   {
-    rBuff.nextWriteIndex = 0;
+    midiBuff.nextWriteIndex = 0;
   }
 }
 
-int ReadRingBuff(struct MidiMsg** msg)
+MidiMsg* FindKeyStateRingBuff(byte key)
 {
-  int* i = &rBuff.stat[rBuff.nextReadIndex];
+  
+}
+
+ int ReadRingBuff(MidiMsg** msg)
+{
+  int* i = &midiBuff.stat[midiBuff.nextReadIndex];
+  if (*i != 1)
+  {
+    int end = midiBuff.nextReadIndex++;
+    ++i;
+    while (*i != 1 && end != midiBuff.nextReadIndex)
+    {
+      ++i;
+      ++midiBuff.nextReadIndex;
+      if (midiBuff.nextReadIndex >= MAX_RBUFF)
+      {
+        i = &midiBuff.stat[0];
+        midiBuff.nextReadIndex = 0;
+      }
+    }
+  }
   if (*i == 1)
   {
-    *msg = &rBuff.buf[rBuff.nextReadIndex++];
-    if (rBuff.nextReadIndex >= MAX_RBUFF)
+    printf("Reading From index %d\n", midiBuff.nextReadIndex );
+    *msg = &midiBuff.buf[midiBuff.nextReadIndex++];
+    if (midiBuff.nextReadIndex >= MAX_RBUFF)
     {
-      rBuff.nextReadIndex = 0;
+      midiBuff.nextReadIndex = 0;
     }
     *i = 0;
     return 1;

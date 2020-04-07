@@ -18,11 +18,15 @@ typedef struct RingBuffer {
 }RingBuffer;
 
 static RingBuffer rBuff;
-
+static void ResetRingBuff(void)
+{
+	memset(&rBuff, 0, sizeof(rBuff));
+}
 static void WriteRingBuff(MidiMsg* msg)
 {
 	rBuff.buf[rBuff.nextWriteIndex] = *msg;
 	rBuff.stat[rBuff.nextWriteIndex++] = 1;
+	printf("Writing to index %d\n", rBuff.nextWriteIndex-1);
 	if (rBuff.nextWriteIndex >= MAX_RBUFF)
 	{
 		rBuff.nextWriteIndex = 0;
@@ -32,8 +36,24 @@ static void WriteRingBuff(MidiMsg* msg)
 static int ReadRingBuff(MidiMsg** msg)
 {
 	int* i = &rBuff.stat[rBuff.nextReadIndex];
+	if (*i != 1)
+	{
+		int end = rBuff.nextReadIndex++;
+		++i;
+		while (*i != 1 && end != rBuff.nextReadIndex)
+		{
+			++i;
+			++rBuff.nextReadIndex;
+			if (rBuff.nextReadIndex >= MAX_RBUFF)
+			{
+				i = &rBuff.stat[0];
+				rBuff.nextReadIndex = 0;
+			}
+		}
+	}
 	if (*i == 1)
 	{
+		printf("Reading From index %d\n", rBuff.nextReadIndex );
 		*msg = &rBuff.buf[rBuff.nextReadIndex++];
 		if (rBuff.nextReadIndex >= MAX_RBUFF)
 		{

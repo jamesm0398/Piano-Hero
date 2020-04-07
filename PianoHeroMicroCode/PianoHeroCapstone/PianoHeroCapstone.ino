@@ -78,7 +78,7 @@ void loop() {
   
   if((state > MIN_MIDI_STATE && state < MAX_MIDI_STATE))
   {    
-    PlayMachineState();
+    ret = PlayMachineState();
   }
   else if(state > MIN_FTP_STATE && state < MAX_FTP_STATE)
   {

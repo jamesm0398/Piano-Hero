@@ -15,7 +15,7 @@ void printMsg(const char* format, int arg ...);
 void printMsg(const char* format, int arg ...)
 {
  #if DEBUG_MSG == 1
-    char s[strlen(format)+20];
+    char s[500];
     sprintf(s, format, arg);
     Serial.write( s );
  #endif

@@ -1,7 +1,7 @@
 //################### MIDI START
 
 #include <MD_MIDIFile.h>
-#include "RingBuffer.h"
+
 #include "LED_VIA_KEYBOARD.h"
 #define GENERATE_TICKS  1
 
@@ -44,11 +44,13 @@ void midiCallback(midi_event *pev)
 //Serial.write("IN CALL BACK!!!!!!!!!!!!!!!!!!\n");
   if ((pev->data[0] >= 0x80) && (pev->data[0] <= 0xe0))
   {
-  //  char s[40] = {0};
+   // char s[40] = {0};
    // sprintf(s,"|%08d|%08d|%08d|%08d|\n", pev->data[0], pev->data[1], pev->data[2], pev->data[3]);
    // Serial.write(s);
-      
-    RunMidiLeds(pev->data[1], pev->data[2]);
+      if(pev->data[0] == 144 || pev->data[0] == 128)
+      {
+        RunMidiLeds(pev->data[1], pev->data[2]);
+      }
 
   }
   else{
@@ -73,7 +75,7 @@ void MidiSilence(void)
   ev.data[ev.size++] = 0;
  
    AllOff();
-  
+  ResetRingBuff();
   for (ev.channel = 0; ev.channel < 16; ev.channel++)
     midiCallback(&ev);
 }
@@ -154,9 +156,9 @@ void MidiLEDsSetup(SdFat*  SD)
   static bool fBeat = false;
   static uint16_t sumTicks = 0;
  
-void PlayMachineState(void)
+int PlayMachineState(void)
 {
-
+  int ret = 1;
 //  static uint16_t currTune = ARRAY_SIZE(tuneList);
   static uint32_t timeStart;
  //static 
@@ -185,6 +187,7 @@ void PlayMachineState(void)
       Serial.print("SMF load Error ");
      // Serial.println(err);
       state = STATE_PROMPT;
+      ret = 0;
     }
     else
     {
@@ -197,14 +200,16 @@ void PlayMachineState(void)
       sumTicks = 0;
       fBeat = false;
      // printMsg("Starting Play",1);
+      AllOff();
+      ResetRingBuff();
     }
     break;
 
   case S_PLAYING: // play the file  
     {
             
-        RunKeyLeds();
-   
+        
+    RunKeyLeds();
         
         uint32_t ticks = tickClock();
         //
@@ -230,6 +235,7 @@ void PlayMachineState(void)
         {
          // printMsg("ticks: %lu\n", ticks); 
         }
+       
       if(SMF.isEOF())// else
       {
       //  Serial.println("end of file\n");
@@ -265,4 +271,5 @@ void PlayMachineState(void)
   }
   //Serial.write("led print\n");
   ShowAll();
+  return ret;
 }
